@@ -7,7 +7,7 @@ var store1 = {
   avgCookiesPerSale: 6.3,
   storeOpeningTime: 6,
   storeClosingTime: 20,
-  cookiesSoldToday: [],
+  cookiesSoldHourly: [],
   cookiesSoldTotal: 0,
   // Generate a random number of customers based on minimum & maximum customers per hour
   randomCustomers: function() {
@@ -18,10 +18,13 @@ var store1 = {
   checkCookieSales: function() {
     // Check each hour for how many cookies were sold
     for (var hour = this.storeOpeningTime; hour < (this.storeClosingTime + 1); hour++) {
-      console.log('Hours elapsed: ' + this.cookiesSoldToday.length);
-      this.cookiesSoldToday[hour - this.storeOpeningTime] = Math.ceil(this.randomCustomers() * this.avgCookiesPerSale); // use Math.ceil to round up, since nobody buys a fraction of a cookie
-      console.log('At ' + hour + ':00, ' + this.cookiesSoldToday[hour - this.storeOpeningTime] + ' cookies were sold.');
-      console.log(this.cookiesSoldToday);
+      console.log('Hours elapsed: ' + this.cookiesSoldHourly.length);
+      var result = Math.ceil(this.randomCustomers() * this.avgCookiesPerSale); // use Math.ceil to round up, since nobody buys a fraction of a cookie
+      this.cookiesSoldHourly[hour - this.storeOpeningTime] = result;
+      console.log('At ' + hour + ':00, ' + result + ' cookies were sold.');
+      this.cookiesSoldTotal += result;
+      console.log('Hourly breakdown: ' + this.cookiesSoldHourly);
+      console.log(this.cookiesSoldTotal);
     }
   }
 };
@@ -32,7 +35,8 @@ var store2 = {
   avgCookiesPerSale: 1.2,
   storeOpeningTime: 6,
   storeClosingTime: 20,
-  cookiesSoldToday: [],
+  cookiesSoldHourly: [],
+  cookiesSoldTotal: 0,
   // Generate a random number of customers based on minimum & maximum customers per hour
   randomCustomers: function() {
     var result = Math.floor(Math.random() * (this.maxHourlyCustomers + this.minHourlyCustomers) + this.minHourlyCustomers);
@@ -42,13 +46,17 @@ var store2 = {
   checkCookieSales: function() {
     // Check each hour for how many cookies were sold
     for (var hour = this.storeOpeningTime; hour < (this.storeClosingTime + 1); hour++) {
-      console.log('Hours elapsed: ' + this.cookiesSoldToday.length);
-      this.cookiesSoldToday[hour - this.storeOpeningTime] = Math.ceil(this.randomCustomers() * this.avgCookiesPerSale); // use Math.ceil to round up, since nobody buys a fraction of a cookie
-      console.log('At ' + hour + ':00, ' + this.cookiesSoldToday[hour - this.storeOpeningTime] + ' cookies were sold.');
-      console.log(this.cookiesSoldToday);
+      console.log('Hours elapsed: ' + this.cookiesSoldHourly.length);
+      var result = Math.ceil(this.randomCustomers() * this.avgCookiesPerSale); // use Math.ceil to round up, since nobody buys a fraction of a cookie
+      this.cookiesSoldHourly[hour - this.storeOpeningTime] = result;
+      console.log('At ' + hour + ':00, ' + result + ' cookies were sold.');
+      this.cookiesSoldTotal += result;
+      console.log('Hourly breakdown: ' + this.cookiesSoldHourly);
+      console.log(this.cookiesSoldTotal);
     }
   }
 };
+
 var store3 = {
   location: 'Seattle Center',
   minHourlyCustomers: 11,
@@ -56,7 +64,8 @@ var store3 = {
   avgCookiesPerSale: 3.7,
   storeOpeningTime: 6,
   storeClosingTime: 20,
-  cookiesSoldToday: [],
+  cookiesSoldHourly: [],
+  cookiesSoldTotal: 0,
   // Generate a random number of customers based on minimum & maximum customers per hour
   randomCustomers: function() {
     var result = Math.floor(Math.random() * (this.maxHourlyCustomers + this.minHourlyCustomers) + this.minHourlyCustomers);
@@ -66,10 +75,13 @@ var store3 = {
   checkCookieSales: function() {
     // Check each hour for how many cookies were sold
     for (var hour = this.storeOpeningTime; hour < (this.storeClosingTime + 1); hour++) {
-      console.log('Hours elapsed: ' + this.cookiesSoldToday.length);
-      this.cookiesSoldToday[hour - this.storeOpeningTime] = Math.ceil(this.randomCustomers() * this.avgCookiesPerSale); // use Math.ceil to round up, since nobody buys a fraction of a cookie
-      console.log('At ' + hour + ':00, ' + this.cookiesSoldToday[hour - this.storeOpeningTime] + ' cookies were sold.');
-      console.log(this.cookiesSoldToday);
+      console.log('Hours elapsed: ' + this.cookiesSoldHourly.length);
+      var result = Math.ceil(this.randomCustomers() * this.avgCookiesPerSale); // use Math.ceil to round up, since nobody buys a fraction of a cookie
+      this.cookiesSoldHourly[hour - this.storeOpeningTime] = result;
+      console.log('At ' + hour + ':00, ' + result + ' cookies were sold.');
+      this.cookiesSoldTotal += result;
+      console.log('Hourly breakdown: ' + this.cookiesSoldHourly);
+      console.log(this.cookiesSoldTotal);
     }
   }
 };
@@ -80,7 +92,8 @@ var store4 = {
   avgCookiesPerSale: 2.3,
   storeOpeningTime: 6,
   storeClosingTime: 20,
-  cookiesSoldToday: [],
+  cookiesSoldHourly: [],
+  cookiesSoldTotal: 0,
   // Generate a random number of customers based on minimum & maximum customers per hour
   randomCustomers: function() {
     var result = Math.floor(Math.random() * (this.maxHourlyCustomers + this.minHourlyCustomers) + this.minHourlyCustomers);
@@ -90,13 +103,17 @@ var store4 = {
   checkCookieSales: function() {
     // Check each hour for how many cookies were sold
     for (var hour = this.storeOpeningTime; hour < (this.storeClosingTime + 1); hour++) {
-      console.log('Hours elapsed: ' + this.cookiesSoldToday.length);
-      this.cookiesSoldToday[hour - this.storeOpeningTime] = Math.ceil(this.randomCustomers() * this.avgCookiesPerSale); // use Math.ceil to round up, since nobody buys a fraction of a cookie
-      console.log('At ' + hour + ':00, ' + this.cookiesSoldToday[hour - this.storeOpeningTime] + ' cookies were sold.');
-      console.log(this.cookiesSoldToday);
+      console.log('Hours elapsed: ' + this.cookiesSoldHourly.length);
+      var result = Math.ceil(this.randomCustomers() * this.avgCookiesPerSale); // use Math.ceil to round up, since nobody buys a fraction of a cookie
+      this.cookiesSoldHourly[hour - this.storeOpeningTime] = result;
+      console.log('At ' + hour + ':00, ' + result + ' cookies were sold.');
+      this.cookiesSoldTotal += result;
+      console.log('Hourly breakdown: ' + this.cookiesSoldHourly);
+      console.log(this.cookiesSoldTotal);
     }
   }
 };
+
 var store5 = {
   location: 'Alki',
   minHourlyCustomers: 2,
@@ -104,7 +121,8 @@ var store5 = {
   avgCookiesPerSale: 4.6,
   storeOpeningTime: 6,
   storeClosingTime: 20,
-  cookiesSoldToday: [],
+  cookiesSoldHourly: [],
+  cookiesSoldTotal: 0,
   // Generate a random number of customers based on minimum & maximum customers per hour
   randomCustomers: function() {
     var result = Math.floor(Math.random() * (this.maxHourlyCustomers + this.minHourlyCustomers) + this.minHourlyCustomers);
@@ -114,10 +132,13 @@ var store5 = {
   checkCookieSales: function() {
     // Check each hour for how many cookies were sold
     for (var hour = this.storeOpeningTime; hour < (this.storeClosingTime + 1); hour++) {
-      console.log('Hours elapsed: ' + this.cookiesSoldToday.length);
-      this.cookiesSoldToday[hour - this.storeOpeningTime] = Math.ceil(this.randomCustomers() * this.avgCookiesPerSale); // use Math.ceil to round up, since nobody buys a fraction of a cookie
-      console.log('At ' + hour + ':00, ' + this.cookiesSoldToday[hour - this.storeOpeningTime] + ' cookies were sold.');
-      console.log(this.cookiesSoldToday);
+      console.log('Hours elapsed: ' + this.cookiesSoldHourly.length);
+      var result = Math.ceil(this.randomCustomers() * this.avgCookiesPerSale); // use Math.ceil to round up, since nobody buys a fraction of a cookie
+      this.cookiesSoldHourly[hour - this.storeOpeningTime] = result;
+      console.log('At ' + hour + ':00, ' + result + ' cookies were sold.');
+      this.cookiesSoldTotal += result;
+      console.log('Hourly breakdown: ' + this.cookiesSoldHourly);
+      console.log(this.cookiesSoldTotal);
     }
   }
 };
@@ -148,15 +169,19 @@ for (var i = 0; i < storesList.length; i++) {
   var listForStore = document.getElementById(storeID);
   listForStore.setAttribute('id', (storeID + 'list'));
   var listElement = document.createElement('ul');
-  for (var j = 0; j < storesList[i].cookiesSoldToday.length; j++) {
+  for (var j = 0; j < storesList[i].cookiesSoldHourly.length; j++) {
     // create a new list item
     var listItemElement = document.createElement('li');
     // assign class attribute of "hourly_report" to the list item
     listItemElement.setAttribute('class', 'hourly_report');
-    // set text content of the list item to content of cookiesSoldToday for this location
-    listItemElement.textContent = (storesList[i].storeOpeningTime + j) + ':00 - ' + storesList[i].cookiesSoldToday[j] + ' cookies sold';
-    // listItemElement.textContent = (storesList[i].storeOpeningTime + j) + ':00: ' + storesList[i].cookiesSoldToday[j] + 'cookies storesList[i].cookiesSoldToday[j]';
+    // set text content of the list item to content of cookiesSoldHourly for this location
+    listItemElement.textContent = (storesList[i].storeOpeningTime + j) + ':00 - ' + storesList[i].cookiesSoldHourly[j] + ' cookies sold';
+    // listItemElement.textContent = (storesList[i].storeOpeningTime + j) + ':00: ' + storesList[i].cookiesSoldHourly[j] + 'cookies storesList[i].cookiesSoldHourly[j]';
     // add the new list item as a child of the given store
     listForStore.appendChild(listItemElement);
   };
+  var totalSoldElement = document.createElement('li');
+  totalSoldElement.setAttribute('class', 'total_report');
+  totalSoldElement.textContent = ('Total: ' + storesList[i].cookiesSoldTotal);
+  listForStore.appendChild(totalSoldElement);
 }
