@@ -121,8 +121,19 @@ var store5 = {
   }
 };
 
-store1.checkCookieSales();
-store2.checkCookieSales();
-store3.checkCookieSales();
-store4.checkCookieSales();
-store5.checkCookieSales();
+var storesList = [store1, store2, store3, store4, store5];
+var dailyReport = document.getElementById('daily_sales');
+console.log(dailyReport);
+for (var i = 0; i < storesList.length; i++) {
+  storesList[i].checkCookieSales();
+  // create a new <p> element
+  var pElement = document.createElement('p');
+  // assign class attribute of "store_location" to the element
+  pElement.setAttribute('class', 'store_location');
+  // set text content of element to the location of the store
+  pElement.textContent = storesList[i].location;
+  dailyReport.appendChild(pElement);
+  // for (var j = 0; i < storesList[i].cookiesSoldToday.length; i++) {
+  //   storesList[i].cookiesSoldToday[j]
+  // }
+}
