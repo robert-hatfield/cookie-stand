@@ -8,6 +8,7 @@ var store1 = {
   storeOpeningTime: 6,
   storeClosingTime: 20,
   cookiesSoldToday: [],
+  cookiesSoldTotal: 0,
   // Generate a random number of customers based on minimum & maximum customers per hour
   randomCustomers: function() {
     var result = Math.floor(Math.random() * (this.maxHourlyCustomers + this.minHourlyCustomers) + this.minHourlyCustomers);
@@ -121,19 +122,41 @@ var store5 = {
   }
 };
 
+// create an array containing all store locations
 var storesList = [store1, store2, store3, store4, store5];
+
+// BEGIN GENERATING SALES REPORT
 var dailyReport = document.getElementById('daily_sales');
 console.log(dailyReport);
 for (var i = 0; i < storesList.length; i++) {
   storesList[i].checkCookieSales();
   // create a new <p> element
   var pElement = document.createElement('p');
-  // assign class attribute of "store_location" to the element
+  var storeID = 'store' + (i + 1);
+  // assign class attribute of "store_location" and an ID equal to store number
   pElement.setAttribute('class', 'store_location');
+  pElement.setAttribute('id', (storeID));
   // set text content of element to the location of the store
   pElement.textContent = storesList[i].location;
+  // add the new element as a child of the "daily_sales" section
   dailyReport.appendChild(pElement);
-  // for (var j = 0; i < storesList[i].cookiesSoldToday.length; i++) {
-  //   storesList[i].cookiesSoldToday[j]
-  // }
+};
+  // BEGIN GENERATING HOURLY REPORT FOR EACH LOCATION
+  // get tag by storeID
+for (var i = 0; i < storesList.length; i++) {
+  var storeID = 'store' + (i + 1);
+  var listForStore = document.getElementById(storeID);
+  listForStore.setAttribute('id', (storeID + 'list'));
+  var listElement = document.createElement('ul');
+  for (var j = 0; j < storesList[i].cookiesSoldToday.length; j++) {
+    // create a new list item
+    var listItemElement = document.createElement('li');
+    // assign class attribute of "hourly_report" to the list item
+    listItemElement.setAttribute('class', 'hourly_report');
+    // set text content of the list item to content of cookiesSoldToday for this location
+    listItemElement.textContent = (storesList[i].storeOpeningTime + j) + ':00 - ' + storesList[i].cookiesSoldToday[j] + ' cookies sold';
+    // listItemElement.textContent = (storesList[i].storeOpeningTime + j) + ':00: ' + storesList[i].cookiesSoldToday[j] + 'cookies storesList[i].cookiesSoldToday[j]';
+    // add the new list item as a child of the given store
+    listForStore.appendChild(listItemElement);
+  };
 }
