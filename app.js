@@ -99,45 +99,45 @@ for (var i = 1; i < 6; i++) {
   eval('addStore (store' + i + ');');
 }
 
-// BEGIN GENERATING SALES REPORT
-// sales will be updated by each store's render method
-var totalSalesToday = [];
-var grandTotalSales = 0;
+// INITIALIZE REPORT
 
-// declare this as a global variable so DOM hook available to all functions
-// defined by salesReportHeader when the table is created
+/* Declare this as a global variable so DOM hook available to all functions. Defined by salesReportHeader when the table is created */
 var salesTableNode;
+// sales will be updated by each store's render method
+var grandTotalSales = 0;
+var salesTableNode;
+var totalSalesToday = [];
+totalSalesInit();
 
-salesReportInit();
+// Create and anchor a new table element
+// identify parent node on the DOM (HTML section "sales_report")
+var dailyReport = document.getElementById('sales_report');
+console.log(dailyReport);
+// create a new table & append it to the HTML section
+salesTableNode = document.createElement('table');
+// give store render methods something to attach to
+salesTableNode.setAttribute('id', 'sales_report_table');
+dailyReport.appendChild(salesTableNode);
+
+// Call render function for the table header row
 salesReportHeader();
 
-// call render function for all stores to add their results to the report
+// call render function for all stores to calculate and add their results to the report
 for (var i = 0; i < storesList.length; i++) {
   storesList[i].render();
 }
 
-// Finish report with hourly totals across all sites
+// Call render function for the table footer row
 salesReportFooter();
 
-function salesReportInit() {
+function totalSalesInit() {
   // ensure all values for totalSalesToday are defined
   for (var i = 0; i < 14; i++) {
     totalSalesToday[i] = 0;
   }
 }
 
-// BEGIN GENERATING SALES REPORT
 function salesReportHeader() {
-  // identify parent node on the DOM (HTML section "sales_report")
-  var dailyReport = document.getElementById('sales_report');
-  console.log(dailyReport);
-
-  // create a new table & append it
-  salesTableNode = document.createElement('table');
-  // give store render methods something to attach to
-  salesTableNode.setAttribute('id', 'sales_report_table');
-  dailyReport.appendChild(salesTableNode);
-
   // create the header row and append it to the table just created, along with first blank table heading cell
   var elTableRow = document.createElement('tr');
   salesTableNode.appendChild(elTableRow);
@@ -163,7 +163,7 @@ function salesReportHeader() {
     elTableHeading.textContent = hourString;
     elTableRow.appendChild(elTableHeading);
   }
-  // Add final heading for total sales for each store1
+  // Add final heading for total sales for each store
   var elLastTableHeading = document.createElement('th');
   elLastTableHeading.setAttribute('class', 'table_header');
   elLastTableHeading.textContent = 'Daily Location Total';
@@ -179,6 +179,7 @@ function salesReportFooter() {
   elFirstTableHeading.textContent = 'Totals';
   elTableRow.appendChild(elFirstTableHeading);
 
+  // add total sales for each hour to the footer row
   for (var i = 0; i < 14; i++) {
     var elTableData = document.createElement('td');
     elTableData.setAttribute('class', 'totals');
@@ -186,7 +187,7 @@ function salesReportFooter() {
     elTableRow.appendChild(elTableData);
   }
 
-  // Add grant total to last entry of footer row
+  // Add grand total to last entry of footer row
   var elTableData = document.createElement('td');
   elTableData.setAttribute('class', 'totals');
   elTableData.setAttribute('id', 'grand_total');
