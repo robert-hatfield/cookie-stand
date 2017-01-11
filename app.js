@@ -152,12 +152,12 @@ function salesReportHeader() {
     // set class of the table headings
     elTableHeading.setAttribute('class', 'table_header');
     // create a user-friendly time stamp
-    if (i < 12) {
-      var hourString = (i + 6) + 'am';
-    } else if (i === 12) {
-      var hourString = '12pm';
+    if (i < 6) {
+      var hourString = (i + 6) + ':00am';
+    } else if (i === 6) {
+      var hourString = '12:00pm';
     } else {
-      var hourString = (i - 6) + 'pm';
+      var hourString = (i - 6) + ':00pm';
     }
     // set text content to the hour
     elTableHeading.textContent = hourString;
