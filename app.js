@@ -49,6 +49,8 @@ Store.prototype.randomCustomers = function () {
 
 // Define render method and add it to the Store objects' prototype
 Store.prototype.render = function() {
+  // check sales for this location - encapsulating method
+  this.checkSales();
   // locate the table created by global function salesReportInit
   var elTable = document.getElementById('sales_report_table');
   // create a new table row and & append to the sales report
@@ -75,10 +77,10 @@ Store.prototype.render = function() {
 // Construct initial 5 stores, and add them to storesList
 // location, timeOpening, timeClosing, minHourlyCustomers, maxHourlyCustomers, avgCookiesPerSale
 var store1 = new Store('1st & Pike', 6, 20, 23, 65, 6.3);
-var store2 = new Store('SeaTac Airport', 6, 20, 3, 27, 1.2);
+var store2 = new Store('SeaTac Airport', 6, 20, 3, 24, 1.2);
 var store3 = new Store('Seattle Center', 6, 20, 11, 38, 3.7);
 var store4 = new Store('Capitol Hill', 6, 20, 20, 38, 2.3);
-var store5 = new Store('Alki', 2, 6, 20, 16, 4.6);
+var store5 = new Store('Alki', 6, 20, 2, 16, 4.6);
 for (var i = 1; i < 6; i++) {
   eval('addStore (store' + i + ');');
 }
@@ -87,8 +89,10 @@ for (var i = 1; i < 6; i++) {
 // sales will be updated by each store's render method
 var totalSalesToday = [];
 salesReportInit();
-store1.checkSales();
-store1.render();
+
+for (var i = 0; i < storesList.length; i++) {
+  storesList[i].render();
+}
 
 // BEGIN GENERATING SALES REPORT
 function salesReportInit() {
