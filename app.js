@@ -57,8 +57,8 @@ Store.prototype.render = function() {
   var elTableRow = document.createElement('tr');
   elTableRow.setAttribute('id', 'store' + this.storeNumber);
   salesTableNode.appendChild(elTableRow);
-  // create the 1st table data with store location
-  var elTableData = document.createElement('td');
+  // create the 1st table header with store location
+  var elTableData = document.createElement('th');
   elTableData.setAttribute('class', 'store_location');
   elTableData.textContent = this.location;
   elTableRow.appendChild(elTableData);
@@ -69,7 +69,7 @@ Store.prototype.render = function() {
     elTableData.textContent = results;
     elTableRow.appendChild(elTableData);
   }
-  // Add footer table data with total sales for the day
+  // Add footer table header with total sales for the day
   var elTableData = document.createElement('td');
   elTableData.setAttribute('class', 'store_total');
   elTableData.textContent = this.cookiesSoldToday;
@@ -130,19 +130,19 @@ function addStore(store) {
 }
 
 function salesReportHeader() {
-  // create the header row and append it to the table just created, along with first blank table heading cell
+  // create the header row and append it to the table just created, along with first blank table header cell
   var elTableRow = document.createElement('tr');
   salesTableNode.appendChild(elTableRow);
-  var elFirstTableHeading = document.createElement('th');
-  elFirstTableHeading.setAttribute('class', 'table_header');
-  elTableRow.appendChild(elFirstTableHeading);
+  var elFirstTableHeader = document.createElement('th');
+  elFirstTableHeader.setAttribute('class', 'table_header');
+  elTableRow.appendChild(elFirstTableHeader);
 
-  // create table headings and add as the contents of the header row
+  // create table headers and add as the contents of the header row
   // starting with 6 AM
   for (var i = 0; i < 14; i++) {
-    var elTableHeading = document.createElement('th');
-    // set class of the table headings
-    elTableHeading.setAttribute('class', 'table_header');
+    var elTableHeader = document.createElement('th');
+    // set class of the table headers
+    elTableHeader.setAttribute('class', 'table_header');
     // create a user-friendly time stamp
     if (i < 6) {
       var hourString = (i + 6) + ':00am';
@@ -152,24 +152,24 @@ function salesReportHeader() {
       var hourString = (i - 6) + ':00pm';
     }
     // set text content to the hour
-    elTableHeading.textContent = hourString;
-    elTableRow.appendChild(elTableHeading);
+    elTableHeader.textContent = hourString;
+    elTableRow.appendChild(elTableHeader);
   }
-  // Add final heading for total sales for each store
-  var elLastTableHeading = document.createElement('th');
-  elLastTableHeading.setAttribute('class', 'table_header');
-  elLastTableHeading.textContent = 'Daily Location Total';
-  elTableRow.appendChild(elLastTableHeading);
+  // Add final header for total sales for each store
+  var elLastTableHeader = document.createElement('th');
+  elLastTableHeader.setAttribute('class', 'table_header');
+  elLastTableHeader.textContent = 'Daily Location Total';
+  elTableRow.appendChild(elLastTableHeader);
 }
 
 function salesReportFooter() {
   // create the footer row and append it to the table
   var elTableRow = document.createElement('tr');
   salesTableNode.appendChild(elTableRow);
-  var elFirstTableHeading = document.createElement('th');
-  elFirstTableHeading.setAttribute('class', 'table_header');
-  elFirstTableHeading.textContent = 'Totals';
-  elTableRow.appendChild(elFirstTableHeading);
+  var elFirstTableHeader = document.createElement('th');
+  elFirstTableHeader.setAttribute('class', 'table_header');
+  elFirstTableHeader.textContent = 'Totals';
+  elTableRow.appendChild(elFirstTableHeader);
 
   // add total sales for each hour to the footer row
   for (var i = 0; i < 14; i++) {
