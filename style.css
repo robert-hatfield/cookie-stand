@@ -1,4 +1,4 @@
-.index {
+body {
   background-color: #ffa07a;
 }
 
@@ -23,9 +23,20 @@ h3.footer {
   text-align: center;
 }
 
+#sales_report {
+  text-align: center;
+  background-color: #bbbbbb;
+  margin-bottom: 10px;
+}
+
 .locations {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
   align-content: space-between;
+}
+
+table, th, td {
+  background-color: #bbbbbb;
+  border: 1px solid #005387;
 }
