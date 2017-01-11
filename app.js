@@ -1,187 +1,188 @@
 'use strict';
 
-var store1 = {
-  location: '1st & Pike',
-  minHourlyCustomers: 23,
-  maxHourlyCustomers: 65,
-  avgCookiesPerSale: 6.3,
-  storeOpeningTime: 6,
-  storeClosingTime: 20,
-  cookiesSoldHourly: [],
-  cookiesSoldTotal: 0,
-  // Generate a random number of customers based on minimum & maximum customers per hour
-  randomCustomers: function() {
-    var result = Math.floor(Math.random() * (this.maxHourlyCustomers + this.minHourlyCustomers) + this.minHourlyCustomers);
-    console.log('Customers this hour: ' + result);
-    return result;
-  },
-  checkCookieSales: function() {
-    // Check each hour for how many cookies were sold
-    for (var hour = this.storeOpeningTime; hour < (this.storeClosingTime + 1); hour++) {
-      console.log('Hours elapsed: ' + this.cookiesSoldHourly.length);
-      var result = Math.ceil(this.randomCustomers() * this.avgCookiesPerSale); // use Math.ceil to round up, since nobody buys a fraction of a cookie
-      this.cookiesSoldHourly[hour - this.storeOpeningTime] = result;
-      console.log('At ' + hour + ':00, ' + result + ' cookies were sold.');
-      this.cookiesSoldTotal += result;
-      console.log('Hourly breakdown: ' + this.cookiesSoldHourly);
-      console.log(this.cookiesSoldTotal);
-    }
-  }
+// TO DO:
+// Allow for rendering stores with different business hours
+
+// DECLARE & INITIALIZE VARIABLES
+var storesList = [];
+// sales will be updated by each store's render method
+var grandTotalSales = 0;
+var salesTableNode;
+var totalSalesToday = [];
+/* Declare this as a global variable so DOM hook available to all functions. Defined by salesReportHeader when the table is created */
+var salesTableNode;
+// ensure all values for totalSalesToday are defined
+for (var i = 0; i < 14; i++) {
+  totalSalesToday[i] = 0;
 };
-var store2 = {
-  location: 'SeaTac Airport',
-  minHourlyCustomers: 3,
-  maxHourlyCustomers: 24,
-  avgCookiesPerSale: 1.2,
-  storeOpeningTime: 6,
-  storeClosingTime: 20,
-  cookiesSoldHourly: [],
-  cookiesSoldTotal: 0,
-  // Generate a random number of customers based on minimum & maximum customers per hour
-  randomCustomers: function() {
-    var result = Math.floor(Math.random() * (this.maxHourlyCustomers + this.minHourlyCustomers) + this.minHourlyCustomers);
-    console.log('Customers this hour: ' + result);
-    return result;
-  },
-  checkCookieSales: function() {
-    // Check each hour for how many cookies were sold
-    for (var hour = this.storeOpeningTime; hour < (this.storeClosingTime + 1); hour++) {
-      console.log('Hours elapsed: ' + this.cookiesSoldHourly.length);
-      var result = Math.ceil(this.randomCustomers() * this.avgCookiesPerSale); // use Math.ceil to round up, since nobody buys a fraction of a cookie
-      this.cookiesSoldHourly[hour - this.storeOpeningTime] = result;
-      console.log('At ' + hour + ':00, ' + result + ' cookies were sold.');
-      this.cookiesSoldTotal += result;
-      console.log('Hourly breakdown: ' + this.cookiesSoldHourly);
-      console.log(this.cookiesSoldTotal);
-    }
+
+// Define checkSales method and add it to the Store objects' prototype
+Store.prototype.checkSales = function () {
+  // Check each hour for how many cookies were sold
+  var hoursOpen = this.timeClosing - this.timeOpening;
+  console.log('Open for ' + hoursOpen + ' hours today.');
+  for (var i = 0; i < hoursOpen; i++) {
+    console.log('Hours elapsed: ' + i);
+    // Multiply cookies per sale by number of customers this hour, and round up
+    // Nobody buys a fraction of a cookie
+    var result = Math.ceil(this.randomCustomers() * this.avgCookiesPerSale);
+    console.log('At ' + (i + this.timeOpening) + ':00, ' + result + ' cookies were sold.');
+    // add to store's daily total and push to hourly report
+    this.cookiesSoldToday += result;
+    this.cookiesSoldHourly.push(result);
+    // Add this hour's sales to store & business hourly records
+    console.log('Hourly breakdown: ' + this.cookiesSoldHourly);
+    console.log('Cookies sold in all stores this hour: ' + this.cookiesSoldHourly);
+    totalSalesToday[i] += result;
+    console.log(totalSalesToday[i]);
+    grandTotalSales += result;
+    console.log('Total cookies sold so far today: ' + grandTotalSales);
   }
 };
 
-var store3 = {
-  location: 'Seattle Center',
-  minHourlyCustomers: 11,
-  maxHourlyCustomers: 38,
-  avgCookiesPerSale: 3.7,
-  storeOpeningTime: 6,
-  storeClosingTime: 20,
-  cookiesSoldHourly: [],
-  cookiesSoldTotal: 0,
-  // Generate a random number of customers based on minimum & maximum customers per hour
-  randomCustomers: function() {
-    var result = Math.floor(Math.random() * (this.maxHourlyCustomers + this.minHourlyCustomers) + this.minHourlyCustomers);
-    console.log('Customers this hour: ' + result);
-    return result;
-  },
-  checkCookieSales: function() {
-    // Check each hour for how many cookies were sold
-    for (var hour = this.storeOpeningTime; hour < (this.storeClosingTime + 1); hour++) {
-      console.log('Hours elapsed: ' + this.cookiesSoldHourly.length);
-      var result = Math.ceil(this.randomCustomers() * this.avgCookiesPerSale); // use Math.ceil to round up, since nobody buys a fraction of a cookie
-      this.cookiesSoldHourly[hour - this.storeOpeningTime] = result;
-      console.log('At ' + hour + ':00, ' + result + ' cookies were sold.');
-      this.cookiesSoldTotal += result;
-      console.log('Hourly breakdown: ' + this.cookiesSoldHourly);
-      console.log(this.cookiesSoldTotal);
-    }
-  }
-};
-var store4 = {
-  location: 'Capitol Hill',
-  minHourlyCustomers: 20,
-  maxHourlyCustomers: 38,
-  avgCookiesPerSale: 2.3,
-  storeOpeningTime: 6,
-  storeClosingTime: 20,
-  cookiesSoldHourly: [],
-  cookiesSoldTotal: 0,
-  // Generate a random number of customers based on minimum & maximum customers per hour
-  randomCustomers: function() {
-    var result = Math.floor(Math.random() * (this.maxHourlyCustomers + this.minHourlyCustomers) + this.minHourlyCustomers);
-    console.log('Customers this hour: ' + result);
-    return result;
-  },
-  checkCookieSales: function() {
-    // Check each hour for how many cookies were sold
-    for (var hour = this.storeOpeningTime; hour < (this.storeClosingTime + 1); hour++) {
-      console.log('Hours elapsed: ' + this.cookiesSoldHourly.length);
-      var result = Math.ceil(this.randomCustomers() * this.avgCookiesPerSale); // use Math.ceil to round up, since nobody buys a fraction of a cookie
-      this.cookiesSoldHourly[hour - this.storeOpeningTime] = result;
-      console.log('At ' + hour + ':00, ' + result + ' cookies were sold.');
-      this.cookiesSoldTotal += result;
-      console.log('Hourly breakdown: ' + this.cookiesSoldHourly);
-      console.log(this.cookiesSoldTotal);
-    }
-  }
+// Define randomCustomers helper method and add it to the Store objects' prototype
+Store.prototype.randomCustomers = function () {
+  // Generate a random number of customers based on min & max for this store
+  var result = Math.floor(Math.random() * (this.maxHourlyCustomers + this.minHourlyCustomers) + this.minHourlyCustomers);
+  console.log('Customers this hour: ' + result);
+  return result;
 };
 
-var store5 = {
-  location: 'Alki',
-  minHourlyCustomers: 2,
-  maxHourlyCustomers: 16,
-  avgCookiesPerSale: 4.6,
-  storeOpeningTime: 6,
-  storeClosingTime: 20,
-  cookiesSoldHourly: [],
-  cookiesSoldTotal: 0,
-  // Generate a random number of customers based on minimum & maximum customers per hour
-  randomCustomers: function() {
-    var result = Math.floor(Math.random() * (this.maxHourlyCustomers + this.minHourlyCustomers) + this.minHourlyCustomers);
-    console.log('Customers this hour: ' + result);
-    return result;
-  },
-  checkCookieSales: function() {
-    // Check each hour for how many cookies were sold
-    for (var hour = this.storeOpeningTime; hour < (this.storeClosingTime + 1); hour++) {
-      console.log('Hours elapsed: ' + this.cookiesSoldHourly.length);
-      var result = Math.ceil(this.randomCustomers() * this.avgCookiesPerSale); // use Math.ceil to round up, since nobody buys a fraction of a cookie
-      this.cookiesSoldHourly[hour - this.storeOpeningTime] = result;
-      console.log('At ' + hour + ':00, ' + result + ' cookies were sold.');
-      this.cookiesSoldTotal += result;
-      console.log('Hourly breakdown: ' + this.cookiesSoldHourly);
-      console.log(this.cookiesSoldTotal);
-    }
+// Define render method and add it to the Store objects' prototype
+Store.prototype.render = function() {
+  // check sales for this location - encapsulating method
+  this.checkSales();
+  // locate the table created by global function salesReportInit
+  // create a new table row and & append to the sales report
+  var elTableRow = document.createElement('tr');
+  elTableRow.setAttribute('id', 'store' + this.storeNumber);
+  salesTableNode.appendChild(elTableRow);
+  // create the 1st table data with store location
+  var elTableData = document.createElement('td');
+  elTableData.setAttribute('class', 'store_location');
+  elTableData.textContent = this.location;
+  elTableRow.appendChild(elTableData);
+  // append table data with each hour's sales numbers
+  for (var i = 0; i < this.cookiesSoldHourly.length; i++) {
+    var elTableData = document.createElement('td');
+    var results = this.cookiesSoldHourly[i];
+    elTableData.textContent = results;
+    elTableRow.appendChild(elTableData);
   }
+  // Add footer table data with total sales for the day
+  var elTableData = document.createElement('td');
+  elTableData.setAttribute('class', 'store_total');
+  elTableData.textContent = this.cookiesSoldToday;
+  elTableRow.appendChild(elTableData);
 };
 
-// create an array containing all store locations
-var storesList = [store1, store2, store3, store4, store5];
+// Construct initial 5 stores, and add them to storesList
+// location, timeOpening, timeClosing, minHourlyCustomers, maxHourlyCustomers, avgCookiesPerSale
+var store1 = new Store('1st & Pike', 6, 20, 23, 65, 6.3);
+var store2 = new Store('SeaTac Airport', 6, 20, 3, 24, 1.2);
+var store3 = new Store('Seattle Center', 6, 20, 11, 38, 3.7);
+var store4 = new Store('Capitol Hill', 6, 20, 20, 38, 2.3);
+var store5 = new Store('Alki', 6, 20, 2, 16, 4.6);
+for (var i = 1; i < 6; i++) {
+  eval('addStore (store' + i + ');');
+}
 
-// BEGIN GENERATING SALES REPORT
-var dailyReport = document.getElementById('daily_sales');
+// CREATE DAILY SALES REPORT
+// identify parent node on the DOM (HTML section "sales_report")
+var dailyReport = document.getElementById('sales_report');
 console.log(dailyReport);
+// Create a new table element & append it to the HTML section
+salesTableNode = document.createElement('table');
+// Give store render methods something to attach to
+salesTableNode.setAttribute('id', 'sales_report_table');
+dailyReport.appendChild(salesTableNode);
+
+// Call render function for the table header row
+salesReportHeader();
+
+// Call render function for all stores to calculate and add their results to the report
 for (var i = 0; i < storesList.length; i++) {
-  storesList[i].checkCookieSales();
-  // create a new <p> element
-  var pElement = document.createElement('p');
-  var storeID = 'store' + (i + 1);
-  // assign class attribute of "store_location" and an ID equal to store number
-  pElement.setAttribute('class', 'store_location');
-  pElement.setAttribute('id', (storeID));
-  // set text content of element to the location of the store
-  pElement.textContent = storesList[i].location;
-  // add the new element as a child of the "daily_sales" section
-  dailyReport.appendChild(pElement);
-};
-  // BEGIN GENERATING HOURLY REPORT FOR EACH LOCATION
-  // get tag by storeID
-for (var i = 0; i < storesList.length; i++) {
-  var storeID = 'store' + (i + 1);
-  var listForStore = document.getElementById(storeID);
-  listForStore.setAttribute('id', (storeID + 'list'));
-  var listElement = document.createElement('ul');
-  for (var j = 0; j < storesList[i].cookiesSoldHourly.length; j++) {
-    // create a new list item
-    var listItemElement = document.createElement('li');
-    // assign class attribute of "hourly_report" to the list item
-    listItemElement.setAttribute('class', 'hourly_report');
-    // set text content of the list item to content of cookiesSoldHourly for this location
-    listItemElement.textContent = (storesList[i].storeOpeningTime + j) + ':00 - ' + storesList[i].cookiesSoldHourly[j] + ' cookies sold';
-    // listItemElement.textContent = (storesList[i].storeOpeningTime + j) + ':00: ' + storesList[i].cookiesSoldHourly[j] + 'cookies storesList[i].cookiesSoldHourly[j]';
-    // add the new list item as a child of the given store
-    listForStore.appendChild(listItemElement);
-  };
-  var totalSoldElement = document.createElement('li');
-  totalSoldElement.setAttribute('class', 'total_report');
-  totalSoldElement.textContent = ('Total: ' + storesList[i].cookiesSoldTotal);
-  listForStore.appendChild(totalSoldElement);
+  storesList[i].render();
+}
+
+// Call render function for the table footer row
+salesReportFooter();
+
+// CONSTRUCTOR AND FUNCTIONS DEFINED
+
+// Constructor to create stores
+function Store(location,timeOpening,timeClosing,minHourlyCustomers,maxHourlyCustomers,avgCookiesPerSale) {
+  this.location = location;
+  this.timeOpening = timeOpening;
+  this.timeClosing = timeClosing;
+  this.minHourlyCustomers = minHourlyCustomers;
+  this.maxHourlyCustomers = maxHourlyCustomers;
+  this.avgCookiesPerSale = avgCookiesPerSale;
+  this.cookiesSoldHourly = [];
+  this.cookiesSoldToday = 0;
+}
+
+// Function to add stores to the store list
+function addStore(store) {
+  storesList.push(store);
+  // set storeNumber to the new length of the list (array)
+  store.storeNumber = storesList.length;
+}
+
+function salesReportHeader() {
+  // create the header row and append it to the table just created, along with first blank table heading cell
+  var elTableRow = document.createElement('tr');
+  salesTableNode.appendChild(elTableRow);
+  var elFirstTableHeading = document.createElement('th');
+  elFirstTableHeading.setAttribute('class', 'table_header');
+  elTableRow.appendChild(elFirstTableHeading);
+
+  // create table headings and add as the contents of the header row
+  // starting with 6 AM
+  for (var i = 0; i < 14; i++) {
+    var elTableHeading = document.createElement('th');
+    // set class of the table headings
+    elTableHeading.setAttribute('class', 'table_header');
+    // create a user-friendly time stamp
+    if (i < 6) {
+      var hourString = (i + 6) + ':00am';
+    } else if (i === 6) {
+      var hourString = '12:00pm';
+    } else {
+      var hourString = (i - 6) + ':00pm';
+    }
+    // set text content to the hour
+    elTableHeading.textContent = hourString;
+    elTableRow.appendChild(elTableHeading);
+  }
+  // Add final heading for total sales for each store
+  var elLastTableHeading = document.createElement('th');
+  elLastTableHeading.setAttribute('class', 'table_header');
+  elLastTableHeading.textContent = 'Daily Location Total';
+  elTableRow.appendChild(elLastTableHeading);
+}
+
+function salesReportFooter() {
+  // create the footer row and append it to the table
+  var elTableRow = document.createElement('tr');
+  salesTableNode.appendChild(elTableRow);
+  var elFirstTableHeading = document.createElement('th');
+  elFirstTableHeading.setAttribute('class', 'table_header');
+  elFirstTableHeading.textContent = 'Totals';
+  elTableRow.appendChild(elFirstTableHeading);
+
+  // add total sales for each hour to the footer row
+  for (var i = 0; i < 14; i++) {
+    var elTableData = document.createElement('td');
+    elTableData.setAttribute('class', 'totals');
+    elTableData.textContent = totalSalesToday[i];
+    elTableRow.appendChild(elTableData);
+  }
+
+  // Add grand total to last entry of footer row
+  var elTableData = document.createElement('td');
+  elTableData.setAttribute('class', 'totals');
+  elTableData.setAttribute('id', 'grand_total');
+  elTableData.textContent = grandTotalSales;
+  elTableRow.appendChild(elTableData);
 }
