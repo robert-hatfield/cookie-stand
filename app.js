@@ -3,27 +3,18 @@
 // TO DO:
 // Allow for rendering stores with different business hours
 
-// Initial store list
+// DECLARE & INITIALIZE VARIABLES
 var storesList = [];
-
-// Constructor to create stores
-function Store(location,timeOpening,timeClosing,minHourlyCustomers,maxHourlyCustomers,avgCookiesPerSale) {
-  this.location = location;
-  this.timeOpening = timeOpening;
-  this.timeClosing = timeClosing;
-  this.minHourlyCustomers = minHourlyCustomers;
-  this.maxHourlyCustomers = maxHourlyCustomers;
-  this.avgCookiesPerSale = avgCookiesPerSale;
-  this.cookiesSoldHourly = [];
-  this.cookiesSoldToday = 0;
-}
-
-// Function to add stores to the store list
-function addStore(store) {
-  storesList.push(store);
-  // set storeNumber to the new length of the list (array)
-  store.storeNumber = storesList.length;
-}
+// sales will be updated by each store's render method
+var grandTotalSales = 0;
+var salesTableNode;
+var totalSalesToday = [];
+/* Declare this as a global variable so DOM hook available to all functions. Defined by salesReportHeader when the table is created */
+var salesTableNode;
+// ensure all values for totalSalesToday are defined
+for (var i = 0; i < 14; i++) {
+  totalSalesToday[i] = 0;
+};
 
 // Define checkSales method and add it to the Store objects' prototype
 Store.prototype.checkSales = function () {
@@ -66,13 +57,11 @@ Store.prototype.render = function() {
   var elTableRow = document.createElement('tr');
   elTableRow.setAttribute('id', 'store' + this.storeNumber);
   salesTableNode.appendChild(elTableRow);
-
   // create the 1st table data with store location
   var elTableData = document.createElement('td');
   elTableData.setAttribute('class', 'store_location');
   elTableData.textContent = this.location;
   elTableRow.appendChild(elTableData);
-
   // append table data with each hour's sales numbers
   for (var i = 0; i < this.cookiesSoldHourly.length; i++) {
     var elTableData = document.createElement('td');
@@ -80,8 +69,7 @@ Store.prototype.render = function() {
     elTableData.textContent = results;
     elTableRow.appendChild(elTableData);
   }
-
-  // append table data with total sales for the day
+  // Add footer table data with total sales for the day
   var elTableData = document.createElement('td');
   elTableData.setAttribute('class', 'store_total');
   elTableData.textContent = this.cookiesSoldToday;
@@ -99,30 +87,20 @@ for (var i = 1; i < 6; i++) {
   eval('addStore (store' + i + ');');
 }
 
-// INITIALIZE REPORT
-
-/* Declare this as a global variable so DOM hook available to all functions. Defined by salesReportHeader when the table is created */
-var salesTableNode;
-// sales will be updated by each store's render method
-var grandTotalSales = 0;
-var salesTableNode;
-var totalSalesToday = [];
-totalSalesInit();
-
-// Create and anchor a new table element
+// CREATE DAILY SALES REPORT
 // identify parent node on the DOM (HTML section "sales_report")
 var dailyReport = document.getElementById('sales_report');
 console.log(dailyReport);
-// create a new table & append it to the HTML section
+// Create a new table element & append it to the HTML section
 salesTableNode = document.createElement('table');
-// give store render methods something to attach to
+// Give store render methods something to attach to
 salesTableNode.setAttribute('id', 'sales_report_table');
 dailyReport.appendChild(salesTableNode);
 
 // Call render function for the table header row
 salesReportHeader();
 
-// call render function for all stores to calculate and add their results to the report
+// Call render function for all stores to calculate and add their results to the report
 for (var i = 0; i < storesList.length; i++) {
   storesList[i].render();
 }
@@ -130,11 +108,25 @@ for (var i = 0; i < storesList.length; i++) {
 // Call render function for the table footer row
 salesReportFooter();
 
-function totalSalesInit() {
-  // ensure all values for totalSalesToday are defined
-  for (var i = 0; i < 14; i++) {
-    totalSalesToday[i] = 0;
-  }
+// CONSTRUCTOR AND FUNCTIONS DEFINED
+
+// Constructor to create stores
+function Store(location,timeOpening,timeClosing,minHourlyCustomers,maxHourlyCustomers,avgCookiesPerSale) {
+  this.location = location;
+  this.timeOpening = timeOpening;
+  this.timeClosing = timeClosing;
+  this.minHourlyCustomers = minHourlyCustomers;
+  this.maxHourlyCustomers = maxHourlyCustomers;
+  this.avgCookiesPerSale = avgCookiesPerSale;
+  this.cookiesSoldHourly = [];
+  this.cookiesSoldToday = 0;
+}
+
+// Function to add stores to the store list
+function addStore(store) {
+  storesList.push(store);
+  // set storeNumber to the new length of the list (array)
+  store.storeNumber = storesList.length;
 }
 
 function salesReportHeader() {
