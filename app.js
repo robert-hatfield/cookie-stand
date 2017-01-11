@@ -1,5 +1,8 @@
 'use strict';
 
+// TO DO:
+// Allow for rendering stores with different business hours
+
 // Initial store list
 var storesList = [];
 
@@ -25,17 +28,24 @@ function addStore(store) {
 // Define checkSales method and add it to the Store objects' prototype
 Store.prototype.checkSales = function () {
   // Check each hour for how many cookies were sold
-  for (var hour = this.timeOpening; hour < this.timeClosing; hour++) {
-    console.log('Hours elapsed: ' + this.cookiesSoldHourly.length);
+  var hoursOpen = this.timeClosing - this.timeOpening;
+  console.log('Open for ' + hoursOpen + ' hours today.');
+  for (var i = 0; i < hoursOpen; i++) {
+    console.log('Hours elapsed: ' + i);
     // Multiply cookies per sale by number of customers this hour, and round up
     // Nobody buys a fraction of a cookie
     var result = Math.ceil(this.randomCustomers() * this.avgCookiesPerSale);
-    // Add this hour's sales to store's hourly records
-    this.cookiesSoldHourly.push(result);
-    console.log('At ' + hour + ':00, ' + result + ' cookies were sold.');
+    console.log('At ' + (i + this.timeOpening) + ':00, ' + result + ' cookies were sold.');
+    // add to store's daily total and push to hourly report
     this.cookiesSoldToday += result;
+    this.cookiesSoldHourly.push(result);
+    // Add this hour's sales to store & business hourly records
     console.log('Hourly breakdown: ' + this.cookiesSoldHourly);
-    console.log('Total cookies sold: ' + this.cookiesSoldToday);
+    console.log('Cookies sold in all stores this hour: ' + this.cookiesSoldHourly);
+    totalSalesToday[i] += result;
+    console.log(totalSalesToday[i]);
+    grandTotalSales += result;
+    console.log('Total cookies sold so far today: ' + grandTotalSales);
   }
 };
 
@@ -52,11 +62,10 @@ Store.prototype.render = function() {
   // check sales for this location - encapsulating method
   this.checkSales();
   // locate the table created by global function salesReportInit
-  var elTable = document.getElementById('sales_report_table');
   // create a new table row and & append to the sales report
   var elTableRow = document.createElement('tr');
   elTableRow.setAttribute('id', 'store' + this.storeNumber);
-  elTable.appendChild(elTableRow);
+  salesTableNode.appendChild(elTableRow);
 
   // create the 1st table data with store location
   var elTableData = document.createElement('td');
@@ -68,10 +77,15 @@ Store.prototype.render = function() {
   for (var i = 0; i < this.cookiesSoldHourly.length; i++) {
     var elTableData = document.createElement('td');
     var results = this.cookiesSoldHourly[i];
-    totalSalesToday[i] += results;
     elTableData.textContent = results;
     elTableRow.appendChild(elTableData);
   }
+
+  // append table data with total sales for the day
+  var elTableData = document.createElement('td');
+  elTableData.setAttribute('class', 'store_total');
+  elTableData.textContent = this.cookiesSoldToday;
+  elTableRow.appendChild(elTableData);
 };
 
 // Construct initial 5 stores, and add them to storesList
@@ -88,75 +102,94 @@ for (var i = 1; i < 6; i++) {
 // BEGIN GENERATING SALES REPORT
 // sales will be updated by each store's render method
 var totalSalesToday = [];
-salesReportInit();
+var grandTotalSales = 0;
 
+// declare this as a global variable so DOM hook available to all functions
+// defined by salesReportHeader when the table is created
+var salesTableNode;
+
+salesReportInit();
+salesReportHeader();
+
+// call render function for all stores to add their results to the report
 for (var i = 0; i < storesList.length; i++) {
   storesList[i].render();
 }
 
-// BEGIN GENERATING SALES REPORT
+// Finish report with hourly totals across all sites
+salesReportFooter();
+
 function salesReportInit() {
+  // ensure all values for totalSalesToday are defined
+  for (var i = 0; i < 14; i++) {
+    totalSalesToday[i] = 0;
+  }
+}
+
+// BEGIN GENERATING SALES REPORT
+function salesReportHeader() {
   // identify parent node on the DOM (HTML section "sales_report")
   var dailyReport = document.getElementById('sales_report');
   console.log(dailyReport);
 
   // create a new table & append it
-  var elTable = document.createElement('table');
+  salesTableNode = document.createElement('table');
   // give store render methods something to attach to
-  elTable.setAttribute('id', 'sales_report_table');
-  dailyReport.appendChild(elTable);
+  salesTableNode.setAttribute('id', 'sales_report_table');
+  dailyReport.appendChild(salesTableNode);
 
   // create the header row and append it to the table just created, along with first blank table heading cell
   var elTableRow = document.createElement('tr');
-  elTable.appendChild(elTableRow);
+  salesTableNode.appendChild(elTableRow);
   var elFirstTableHeading = document.createElement('th');
   elFirstTableHeading.setAttribute('class', 'table_header');
   elTableRow.appendChild(elFirstTableHeading);
 
   // create table headings and add as the contents of the header row
   // starting with 6 AM
-  for (var i = 6; i < 20; i++) {
+  for (var i = 0; i < 14; i++) {
     var elTableHeading = document.createElement('th');
     // set class of the table headings
     elTableHeading.setAttribute('class', 'table_header');
     // create a user-friendly time stamp
     if (i < 12) {
-      var hourString = i + ':00 AM';
+      var hourString = (i + 6) + 'am';
     } else if (i === 12) {
-      var hourString = '12:00 PM';
+      var hourString = '12pm';
     } else {
-      var hourString = (i - 12) + ':00 PM';
+      var hourString = (i - 6) + 'pm';
     }
     // set text content to the hour
     elTableHeading.textContent = hourString;
     elTableRow.appendChild(elTableHeading);
   }
+  // Add final heading for total sales for each store1
+  var elLastTableHeading = document.createElement('th');
+  elLastTableHeading.setAttribute('class', 'table_header');
+  elLastTableHeading.textContent = 'Daily Location Total';
+  elTableRow.appendChild(elLastTableHeading);
 }
 
-// for (var i = 0; i < storesList.length; i++) {
-//   // check sales for each store
-//   storesList[i].checkSales();
-//   // BEGIN GENERATING HOURLY REPORT FOR EACH LOCATION
-//   // get tag by storeID
-// for (var i = 0; i < storesList.length; i++) {
-//   var storeID = 'store' + (i + 1);
-//   var listForStore = document.getElementById(storeID);
-//   listForStore.setAttribute('id', (storeID + 'list'));
-//   var listElement = document.createElement('ul');
-//   for (var j = 0; j < storesList[i].cookiesSoldHourly.length; j++) {
-//     // create a new list item
-//     var listItemElement = document.createElement('li');
-//     // assign class attribute of "hourly_report" to the list item
-//
-//     // REDEFINE THIS
-//     // listItemElement.setAttribute('class', 'hourly_report');
-//     // set text content of the list item to content of cookiesSoldHourly for this location
-//     listItemElement.textContent = (storesList[i].timeOpening + j) + ':00 - ' + storesList[i].cookiesSoldHourly[j] + ' cookies sold';
-//     // add the new list item as a child of the given store
-//     listForStore.appendChild(listItemElement);
-//   };
-//   var totalSoldElement = document.createElement('li');
-//   totalSoldElement.setAttribute('class', 'total_report');
-//   totalSoldElement.textContent = ('Total: ' + storesList[i].cookiesSoldToday);
-//   listForStore.appendChild(totalSoldElement);
-// }
+function salesReportFooter() {
+  // create the footer row and append it to the table
+  var elTableRow = document.createElement('tr');
+  salesTableNode.appendChild(elTableRow);
+  var elFirstTableHeading = document.createElement('th');
+  elFirstTableHeading.setAttribute('class', 'table_header');
+  elFirstTableHeading.textContent = 'Totals';
+  elTableRow.appendChild(elFirstTableHeading);
+
+  for (var i = 0; i < 14; i++) {
+    var elTableData = document.createElement('td');
+    elTableData.setAttribute('class', 'totals');
+    elTableData.textContent = totalSalesToday[i];
+    elTableRow.appendChild(elTableData);
+  }
+
+  // Add grant total to last entry of footer row
+  var elTableData = document.createElement('td');
+  elTableData.setAttribute('class', 'totals');
+  elTableData.setAttribute('id', 'grand_total');
+  elTableData.textContent = grandTotalSales;
+  elTableRow.appendChild(elTableData);
+}
