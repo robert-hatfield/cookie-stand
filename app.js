@@ -186,3 +186,12 @@ function salesReportFooter() {
   elTableData.textContent = grandTotalSales;
   elTableRow.appendChild(elTableData);
 }
+
+// Call this function to append new elements on the DOM
+function appendToDom(newElementType, classValue , idValue, textContent, parentElement) {
+  var newElement = document.createElement(newElementType);
+  newElement.setAttribute('class', classValue);
+  newElement.setAttribute('id', idValue);
+  newElement.textContent = textContent;
+  parentElement.appendChild(newElement);
+}
