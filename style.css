@@ -1,3 +1,31 @@
-#sales_header {
+.index {
+  background-color: #ffa07a;
+}
+
+.index_header {
+  background-color: #bbbbbb;
   text-align: center;
+  padding: 20px;
+  border-radius: 30%/60%;
+}
+
+img.center {
+  max-width: 100%;
+  width: 90%;
+  height: auto;
+  display: block;
+  padding-bottom: 5%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+h3.footer {
+  text-align: center;
+}
+
+.locations {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-content: space-between;
 }
