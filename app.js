@@ -101,9 +101,9 @@ dailyReport.appendChild(salesTableNode);
 salesReportHeader();
 
 // Call render function for all stores to calculate and add their results to the report
-for (var i = 0; i < storesList.length; i++) {
-  storesList[i].render();
-}
+// for (var i = 0; i < storesList.length; i++) {
+//   storesList[i].render();
+// }
 
 // Call render function for the table footer row
 salesReportFooter();
@@ -195,3 +195,13 @@ function appendToDom(newElementType, classValue , idValue, textContent, parentEl
   newElement.textContent = textContent;
   parentElement.appendChild(newElement);
 }
+
+var formEl = document.getElementById('add_store');
+
+formEl.addEventListener('submit', function(event) {
+  event.preventDefault();
+  event.stopPropagation();
+  var newStore = new Store(event.target.location.value, event.target.time_opening.value, event.target.time_closing.value, event.target.min_hourly_customers.value, event.target.max_hourly_customers.value, event.target.avg_cookies_per_sale.value);
+  console.log(newStore) + 'test';
+  storesList.push(newStore);
+});
