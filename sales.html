@@ -5,8 +5,50 @@
     <link rel="stylesheet" type="text/css" href="style.css" />
   </head>
   <body>
+
     <section id="sales_report">
-    <h1><span id="sales_header">Daily Sales by hour &amp; location</span></h1>
+      <h1><span id="sales_header">Daily Sales by hour &amp; location</span></h1>
+    </section>
+
+    <form id="add_store">
+      <fieldset>
+        <legend>Add a New Store</legend>
+        <fieldset>
+          <legend>Location &amp; Hours</legend>
+          <label for="store_location">Store Location:</label>
+          <input type="text" name="store_location" />
+          <label for="time_opening">Store Opening Time:</label>
+          <select name="time_opening">
+            <option value="6">6:00</option>
+            <option value="7">7:00</option>
+            <option value="8">8:00</option>
+            <option value="9">9:00</option>
+          </select>
+          <label for="ampm_open">AM/PM</label>
+          <input type="radio" name="ampm_open" value="AM" />AM
+          <input type="radio" name="ampm_open" value="PM" />PM
+          <label for="time_closing">Store Closing Time:</label>
+          <select name="time_closing">
+            <option value="8">8:00</option>
+            <option value="9">9:00</option>
+            <option value="10">10:00</option>
+          </select>
+          <label for="ampm_close">AM/PM</label>
+          <input type="radio" name="ampm_close" value="AM" />AM
+          <input type="radio" name="ampm_close" value="PM" />PM
+        </fieldset>
+        <fieldset>
+          <legend>Statistics</legend>
+          <label for="min_customers">Minimum Hourly Customers:</label>
+          <input type="text" name="min_customers" />
+          <label for="max_customers">Maximum Hourly Customers:</label>
+          <input type="text" name="max_customers" />
+          <label for="avg_sale">Average Cookies Per Customer:</label>
+          <input type="text" name="avg_sale" />
+        </fieldset>
+        <button type="submit" name="create_store">CREATE NEW STORE</button>
+      </fieldset>
+    </form>
     <script src="app.js"></script>
   </body>
 </html>
