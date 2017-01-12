@@ -27,7 +27,7 @@ for (var i = 1; i < 6; i++) {
   eval('addStore (store' + i + ');');
 }
 
-// CREATE DAILY SALES REPORT
+// CREATE DAILY SALES REPORT TABLE
 // identify parent node on the DOM (HTML section "sales_report")
 var dailyReport = document.getElementById('sales_report');
 console.log(dailyReport);
@@ -120,6 +120,8 @@ for (var i = 0; i < storesList.length; i++) {
 // Call render function for the table footer row
 salesReportFooter();
 
+// FUNCTIONS
+
 // Function to add stores to the store list
 function addStore(store) {
   storesList.push(store);
@@ -128,7 +130,7 @@ function addStore(store) {
 }
 
 function salesReportHeader() {
-  // create the header row and append it to the table just created, along with first blank table header cell
+  // Create the header row and append it to the table just created, along with first blank table header cell
   var elTableRow = document.createElement('tr');
   salesTableNode.appendChild(elTableRow);
   var elFirstTableHeader = document.createElement('th');
@@ -183,15 +185,6 @@ function salesReportFooter() {
   elTableData.setAttribute('id', 'grand_total');
   elTableData.textContent = grandTotalSales;
   footerElementNode.appendChild(elTableData);
-}
-
-// Call this function to append new elements on the DOM
-function appendToDom(newElementType, classValue , idValue, textContent, parentElement) {
-  var newElement = document.createElement(newElementType);
-  newElement.setAttribute('class', classValue);
-  newElement.setAttribute('id', idValue);
-  newElement.textContent = textContent;
-  parentElement.appendChild(newElement);
 }
 
 // create listener for forms submission
