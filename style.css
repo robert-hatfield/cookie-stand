@@ -1,6 +1,4 @@
-/*Use the following CSS rules to specify these families
-font-family: 'Cinzel Decorative', cursive;
-font-family: 'Lato', sans-serif;*/
+
 h3 {
   text-align: center;
   margin: 10px 0px 10px 0px;
@@ -72,6 +70,12 @@ footer {
   background-color: #bbbbbb;
 }
 
+#sales_report {
+  text-align: center;
+  background-color: #bbbbbb;
+  margin-bottom: 10px;
+}
+
 #locations {
   margin-bottom: 10px;
   padding-left: 5px;
@@ -81,4 +85,9 @@ footer {
   flex-wrap: wrap;
   justify-content: space-around;
   align-content: space-between;
+}
+
+table, th, td {
+  background-color: #bbbbbb;
+  border: 1px solid #005387;
 }
