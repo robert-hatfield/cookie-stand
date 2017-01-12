@@ -188,10 +188,17 @@ function salesReportFooter() {
 }
 
 // Call this function to append new elements on the DOM
-function appendToDom(newElementType, classValue , idValue, textContent, parentElement) {
+// Pass undefined for optional arguments (classValue, idValue, textContent) if you do not want to set these attributes
+function appendToDom(newElementType, classValue, idValue, textContent, parentElement) {
   var newElement = document.createElement(newElementType);
-  newElement.setAttribute('class', classValue);
-  newElement.setAttribute('id', idValue);
-  newElement.textContent = textContent;
+  if (typeof classValue !== 'undefined') {
+    newElement.setAttribute('class', classValue);
+  }
+  if (typeof idValue !== 'undefined') {
+    newElement.setAttribute('id', idValue);
+  }
+  if (typeof textContent !== 'undefined') {
+    newElement.textContent = textContent;
+  }
   parentElement.appendChild(newElement);
 }
