@@ -1,3 +1,6 @@
+#Todo
+* Fix hours, data type from strings to numbers, checkSales on new objects are off
+
 # Application requirements
 * Daily Sales Projections (_Calculate the number of cookies needed at each location per day_)
   * **Name:** `sales.html`
