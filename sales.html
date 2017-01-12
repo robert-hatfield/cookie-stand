@@ -2,11 +2,54 @@
 <html>
   <head>
     <title>Pat's Salmon Cookies | Sales</title>
+    <link href="https://fonts.googleapis.com/css?family=Cinzel+Decorative" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style.css" />
   </head>
   <body>
+
     <section id="sales_report">
-    <h1 id="sales_header">Daily Sales by hour &amp; location</h1>
+      <h1><span id="sales_header">Daily Sales by hour &amp; location</span></h1>
+    </section>
+
+    <form id="add_store">
+      <fieldset>
+        <legend>Add a New Store</legend>
+        <fieldset>
+          <legend>Location &amp; Hours</legend>
+          <label for="location">Store Location:</label>
+          <input type="text" name="location" />
+          <label for="time_opening">Store Opening Time:</label>
+          <select name="time_opening">
+            <option value="6">6:00</option>
+            <option value="7">7:00</option>
+            <option value="8">8:00</option>
+            <option value="9">9:00</option>
+          </select>
+          <label for="ampm_open">AM/PM</label>
+          <input type="radio" name="ampm_open" value="AM" checked="checked"/>AM
+          <input type="radio" name="ampm_open" value="PM" />PM
+          <label for="time_closing">Store Closing Time:</label>
+          <select name="time_closing">
+            <option value="8">8:00</option>
+            <option value="9">9:00</option>
+            <option value="10">10:00</option>
+          </select>
+          <label for="ampm_close">AM/PM</label>
+          <input type="radio" name="ampm_close" value="AM" />AM
+          <input type="radio" name="ampm_close" value="PM" checked="checked" />PM
+        </fieldset>
+        <fieldset>
+          <legend>Statistics</legend>
+          <label for="min_hourly_customers">Minimum Hourly Customers:</label>
+          <input type="text" name="min_hourly_customers" />
+          <label for="max_hourly_customers">Maximum Hourly Customers:</label>
+          <input type="text" name="max_hourly_customers" />
+          <label for="avg_cookies_per_sale">Average Cookies Per Customer:</label>
+          <input type="text" name="avg_cookies_per_sale" />
+        </fieldset>
+        <button type="submit" name="create_store">CREATE NEW STORE</button>
+      </fieldset>
+    </form>
     <script src="app.js"></script>
   </body>
 </html>
