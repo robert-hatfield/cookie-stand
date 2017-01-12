@@ -8,8 +8,9 @@ var storesList = [];
 // sales will be updated by each store's render method
 var grandTotalSales = 0;
 var totalSalesToday = [];
-/* Declare this as a global variable so DOM hook available to all functions. Defined by salesReportHeader when the table is created */
+/* Declare this as a global variable so DOM hook available to all functions. Defined by salesReportHeader and salesReportFooter when the table is created */
 var salesTableNode;
+var footerElementNode;
 // ensure all values for totalSalesToday are defined
 for (var i = 0; i < 14; i++) {
   totalSalesToday[i] = 0;
@@ -99,7 +100,7 @@ dailyReport.appendChild(salesTableNode);
 // Call render function for the table header row
 salesReportHeader();
 
-// Call render function for all stores to calculate and add their results to the report
+// Call render method for all stores to calculate and add their results to the report
 for (var i = 0; i < storesList.length; i++) {
   storesList[i].render();
 }
@@ -161,7 +162,6 @@ function salesReportHeader() {
   elTableRow.appendChild(elLastTableHeader);
 }
 
-var footerElementNode;
 function salesReportFooter() {
   // create the footer row and append it to the table
   footerElementNode = document.createElement('tr');
