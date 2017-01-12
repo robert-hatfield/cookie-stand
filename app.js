@@ -20,30 +20,30 @@ for (var i = 0; i < 14; i++) {
 Store.prototype.checkSales = function () {
   // Check each hour for how many cookies were sold
   var hoursOpen = this.timeClosing - this.timeOpening;
-  console.log('Open for ' + hoursOpen + ' hours today.');
+  // console.log('Open for ' + hoursOpen + ' hours today.');
   for (var i = 0; i < hoursOpen; i++) {
-    console.log('Hours elapsed: ' + i);
+    // console.log('Hours elapsed: ' + i);
     // Multiply cookies per sale by number of customers this hour, and round up
     // Nobody buys a fraction of a cookie
     var result = Math.ceil(this.randomCustomers() * this.avgCookiesPerSale);
-    console.log('At ' + (i + this.timeOpening) + ':00, ' + result + ' cookies were sold.');
+    // console.log('At ' + (i + this.timeOpening) + ':00, ' + result + ' cookies were sold.');
     // add to store's daily total and push to hourly report
     this.cookiesSoldToday += result;
     this.cookiesSoldHourly.push(result);
     // Add this hour's sales to store & business hourly records
-    console.log('Hourly breakdown: ' + this.cookiesSoldHourly);
-    console.log('Cookies sold in all stores this hour: ' + this.cookiesSoldHourly);
+    // console.log('Hourly breakdown: ' + this.cookiesSoldHourly);
+    // console.log('Cookies sold in all stores this hour: ' + this.cookiesSoldHourly);
     totalSalesToday[i] += result;
-    console.log(totalSalesToday[i]);
+    // console.log(totalSalesToday[i]);
     grandTotalSales += result;
-    console.log('Total cookies sold so far today: ' + grandTotalSales);
+    // console.log('Total cookies sold so far today: ' + grandTotalSales);
   }
 };
 
 // Define randomCustomers helper method and add it to the Store objects' prototype
 Store.prototype.randomCustomers = function () {
   // Generate a random number of customers based on min & max for this store
-  var result = Math.floor(Math.random() * (this.maxHourlyCustomers + this.minHourlyCustomers) + this.minHourlyCustomers);
+  var result = Math.floor(Math.random() * (this.maxHourlyCustomers - this.minHourlyCustomers + 1)) + this.minHourlyCustomers;
   console.log('Customers this hour: ' + result);
   return result;
 };
@@ -196,12 +196,18 @@ function appendToDom(newElementType, classValue , idValue, textContent, parentEl
   parentElement.appendChild(newElement);
 }
 
+// create listener for forms submission
 var formEl = document.getElementById('add_store');
 
 formEl.addEventListener('submit', function(event) {
   event.preventDefault();
   event.stopPropagation();
+  // create new store object with received arguments
   var newStore = new Store(event.target.location.value, event.target.time_opening.value, event.target.time_closing.value, event.target.min_hourly_customers.value, event.target.max_hourly_customers.value, event.target.avg_cookies_per_sale.value);
-  console.log(typeof newStore) + 'test';
+  console.log(newStore + 'test');
   storesList.push(newStore);
+  footerElementNode.remove();
+  // render new store to table
+  storesList[(storesList.length - 1)].render();
+  salesReportFooter();
 });
