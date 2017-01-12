@@ -7,7 +7,6 @@
 var storesList = [];
 // sales will be updated by each store's render method
 var grandTotalSales = 0;
-var salesTableNode;
 var totalSalesToday = [];
 /* Declare this as a global variable so DOM hook available to all functions. Defined by salesReportHeader when the table is created */
 var salesTableNode;
@@ -101,9 +100,9 @@ dailyReport.appendChild(salesTableNode);
 salesReportHeader();
 
 // Call render function for all stores to calculate and add their results to the report
-// for (var i = 0; i < storesList.length; i++) {
-//   storesList[i].render();
-// }
+for (var i = 0; i < storesList.length; i++) {
+  storesList[i].render();
+}
 
 // Call render function for the table footer row
 salesReportFooter();
@@ -162,21 +161,22 @@ function salesReportHeader() {
   elTableRow.appendChild(elLastTableHeader);
 }
 
+var footerElementNode;
 function salesReportFooter() {
   // create the footer row and append it to the table
-  var elTableRow = document.createElement('tr');
-  salesTableNode.appendChild(elTableRow);
+  footerElementNode = document.createElement('tr');
+  salesTableNode.appendChild(footerElementNode);
   var elFirstTableHeader = document.createElement('th');
   elFirstTableHeader.setAttribute('class', 'table_header');
   elFirstTableHeader.textContent = 'Totals';
-  elTableRow.appendChild(elFirstTableHeader);
+  footerElementNode.appendChild(elFirstTableHeader);
 
   // add total sales for each hour to the footer row
   for (var i = 0; i < 14; i++) {
     var elTableData = document.createElement('td');
     elTableData.setAttribute('class', 'totals');
     elTableData.textContent = totalSalesToday[i];
-    elTableRow.appendChild(elTableData);
+    footerElementNode.appendChild(elTableData);
   }
 
   // Add grand total to last entry of footer row
@@ -184,7 +184,7 @@ function salesReportFooter() {
   elTableData.setAttribute('class', 'totals');
   elTableData.setAttribute('id', 'grand_total');
   elTableData.textContent = grandTotalSales;
-  elTableRow.appendChild(elTableData);
+  footerElementNode.appendChild(elTableData);
 }
 
 // Call this function to append new elements on the DOM
@@ -202,6 +202,6 @@ formEl.addEventListener('submit', function(event) {
   event.preventDefault();
   event.stopPropagation();
   var newStore = new Store(event.target.location.value, event.target.time_opening.value, event.target.time_closing.value, event.target.min_hourly_customers.value, event.target.max_hourly_customers.value, event.target.avg_cookies_per_sale.value);
-  console.log(newStore) + 'test';
+  console.log(typeof newStore) + 'test';
   storesList.push(newStore);
 });
