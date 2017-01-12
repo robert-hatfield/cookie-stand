@@ -7,10 +7,10 @@
 var storesList = [];
 // sales will be updated by each store's render method
 var grandTotalSales = 0;
-var salesTableNode;
 var totalSalesToday = [];
-/* Declare this as a global variable so DOM hook available to all functions. Defined by salesReportHeader when the table is created */
+/* Declare this as a global variable so DOM hook available to all functions. Defined by salesReportHeader and salesReportFooter when the table is created */
 var salesTableNode;
+var footerElementNode;
 // ensure all values for totalSalesToday are defined
 for (var i = 0; i < 14; i++) {
   totalSalesToday[i] = 0;
@@ -20,30 +20,30 @@ for (var i = 0; i < 14; i++) {
 Store.prototype.checkSales = function () {
   // Check each hour for how many cookies were sold
   var hoursOpen = this.timeClosing - this.timeOpening;
-  console.log('Open for ' + hoursOpen + ' hours today.');
+  // console.log('Open for ' + hoursOpen + ' hours today.');
   for (var i = 0; i < hoursOpen; i++) {
-    console.log('Hours elapsed: ' + i);
+    // console.log('Hours elapsed: ' + i);
     // Multiply cookies per sale by number of customers this hour, and round up
     // Nobody buys a fraction of a cookie
     var result = Math.ceil(this.randomCustomers() * this.avgCookiesPerSale);
-    console.log('At ' + (i + this.timeOpening) + ':00, ' + result + ' cookies were sold.');
+    // console.log('At ' + (i + this.timeOpening) + ':00, ' + result + ' cookies were sold.');
     // add to store's daily total and push to hourly report
     this.cookiesSoldToday += result;
     this.cookiesSoldHourly.push(result);
     // Add this hour's sales to store & business hourly records
-    console.log('Hourly breakdown: ' + this.cookiesSoldHourly);
-    console.log('Cookies sold in all stores this hour: ' + this.cookiesSoldHourly);
+    // console.log('Hourly breakdown: ' + this.cookiesSoldHourly);
+    // console.log('Cookies sold in all stores this hour: ' + this.cookiesSoldHourly);
     totalSalesToday[i] += result;
-    console.log(totalSalesToday[i]);
+    // console.log(totalSalesToday[i]);
     grandTotalSales += result;
-    console.log('Total cookies sold so far today: ' + grandTotalSales);
+    // console.log('Total cookies sold so far today: ' + grandTotalSales);
   }
 };
 
 // Define randomCustomers helper method and add it to the Store objects' prototype
 Store.prototype.randomCustomers = function () {
   // Generate a random number of customers based on min & max for this store
-  var result = Math.floor(Math.random() * (this.maxHourlyCustomers + this.minHourlyCustomers) + this.minHourlyCustomers);
+  var result = Math.floor(Math.random() * (this.maxHourlyCustomers - this.minHourlyCustomers + 1)) + this.minHourlyCustomers;
   console.log('Customers this hour: ' + result);
   return result;
 };
@@ -100,7 +100,7 @@ dailyReport.appendChild(salesTableNode);
 // Call render function for the table header row
 salesReportHeader();
 
-// Call render function for all stores to calculate and add their results to the report
+// Call render method for all stores to calculate and add their results to the report
 for (var i = 0; i < storesList.length; i++) {
   storesList[i].render();
 }
@@ -164,19 +164,19 @@ function salesReportHeader() {
 
 function salesReportFooter() {
   // create the footer row and append it to the table
-  var elTableRow = document.createElement('tr');
-  salesTableNode.appendChild(elTableRow);
+  footerElementNode = document.createElement('tr');
+  salesTableNode.appendChild(footerElementNode);
   var elFirstTableHeader = document.createElement('th');
   elFirstTableHeader.setAttribute('class', 'table_header');
   elFirstTableHeader.textContent = 'Totals';
-  elTableRow.appendChild(elFirstTableHeader);
+  footerElementNode.appendChild(elFirstTableHeader);
 
   // add total sales for each hour to the footer row
   for (var i = 0; i < 14; i++) {
     var elTableData = document.createElement('td');
     elTableData.setAttribute('class', 'totals');
     elTableData.textContent = totalSalesToday[i];
-    elTableRow.appendChild(elTableData);
+    footerElementNode.appendChild(elTableData);
   }
 
   // Add grand total to last entry of footer row
@@ -184,7 +184,7 @@ function salesReportFooter() {
   elTableData.setAttribute('class', 'totals');
   elTableData.setAttribute('id', 'grand_total');
   elTableData.textContent = grandTotalSales;
-  elTableRow.appendChild(elTableData);
+  footerElementNode.appendChild(elTableData);
 }
 
 // Call this function to append new elements on the DOM
@@ -202,3 +202,19 @@ function appendToDom(newElementType, classValue, idValue, textContent, parentEle
   }
   parentElement.appendChild(newElement);
 }
+
+// create listener for forms submission
+var formEl = document.getElementById('add_store');
+
+formEl.addEventListener('submit', function(event) {
+  event.preventDefault();
+  event.stopPropagation();
+  // create new store object with received arguments
+  var newStore = new Store(event.target.location.value, event.target.time_opening.value, event.target.time_closing.value, event.target.min_hourly_customers.value, event.target.max_hourly_customers.value, event.target.avg_cookies_per_sale.value);
+  console.log(newStore + 'test');
+  storesList.push(newStore);
+  footerElementNode.remove();
+  // render new store to table
+  storesList[(storesList.length - 1)].render();
+  salesReportFooter();
+});
