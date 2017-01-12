@@ -115,9 +115,9 @@ function Store(location,timeOpening,timeClosing,minHourlyCustomers,maxHourlyCust
   this.location = location;
   this.timeOpening = timeOpening;
   this.timeClosing = timeClosing;
-  this.minHourlyCustomers = minHourlyCustomers;
-  this.maxHourlyCustomers = maxHourlyCustomers;
-  this.avgCookiesPerSale = avgCookiesPerSale;
+  this.minHourlyCustomers = parseInt(minHourlyCustomers);
+  this.maxHourlyCustomers = parseInt(maxHourlyCustomers);
+  this.avgCookiesPerSale = parseFloat(avgCookiesPerSale);
   this.cookiesSoldHourly = [];
   this.cookiesSoldToday = 0;
 }
