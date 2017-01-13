@@ -209,8 +209,15 @@ var formEl = document.getElementById('add_store');
 formEl.addEventListener('submit', function(event) {
   event.preventDefault();
   event.stopPropagation();
+  // convert or validate user input
+  var location = event.target.location.value;
+  var timeOpening = parseInt(event.target.time_opening.value);
+  var timeClosing = parseInt(event.target.time_closing.value);
+  var minHourlyCustomers = parseInt(event.target.min_hourly_customers.value);
+  var maxHourlyCustomers = parseInt(event.target.max_hourly_customers.value);
+  var avgCookiesPerSale = event.target.avg_cookies_per_sale.value;
   // create new store object with received arguments
-  var newStore = new Store(event.target.location.value, event.target.time_opening.value, event.target.time_closing.value, event.target.min_hourly_customers.value, event.target.max_hourly_customers.value, event.target.avg_cookies_per_sale.value);
+  var newStore = new Store(location,timeOpening,timeClosing,minHourlyCustomers,maxHourlyCustomers,avgCookiesPerSale);
   console.log(newStore + 'test');
   storesList.push(newStore);
   footerElementNode.remove();
