@@ -206,15 +206,58 @@ function appendToDom(newElementType, classValue, idValue, textContent, parentEle
 // create listener for forms submission
 var formEl = document.getElementById('add_store');
 
-formEl.addEventListener('submit', function(event) {
+formEl.addEventListener('submit', newStoreSubmit, false);
+
+function newStoreSubmit(event) {
   event.preventDefault();
   event.stopPropagation();
+  // convert and/or validate user input
+  var location = event.target.location.value;
+  var timeOpening = parseInt(event.target.time_opening.value);
+  var amPmOpen = event.target.ampm_open.value;
+
+  // change times from am/pm to 24hr
+  console.log(timeOpening + ' is a ' + typeof timeOpening);
+  console.log('Value: ' + amPmOpen + ' has data type of: ' + typeof amPmOpen + '.');
+  console.log('Is this PM? ' + (amPmOpen === 'PM'));
+  console.log('NOT opening at 12? ' + (timeOpening != 12));
+  if (amPmOpen === 'PM' && timeOpening != 12) {
+    var responseString = timeOpening + amPmOpen + ' was entered,';
+    timeOpening += 12;
+    console.log(responseString + ' changing to ' + timeOpening + ' for calculations.');
+  }
+  var timeClosing = parseInt(event.target.time_closing.value);
+  var amPmClose = event.target.ampm_close.value;
+  console.log(timeClosing);
+  console.log('Value: ' + amPmClose + ' has data type of: ' + typeof amPmClose + '.');
+  console.log('Value: ' + amPmOpen + ' has data type of: ' + typeof amPmOpen + '.');
+  if (amPmClose === 'PM' && timeClosing != 12) {
+    var responseString = timeClosing + amPmClose + ' was entered,';
+    timeClosing += 12;
+    console.log(responseString + ' changing to ' + timeOpening + ' for calculations.');
+  }
+
+  // If min customers exceeds max, abort store construction
+  var targetMinHourlyCustomers = event.target.min_hourly_customers.value;
+  var minHourlyCustomers = parseInt(targetMinHourlyCustomers);
+
+  var maxHourlyCustomers = parseInt(event.target.max_hourly_customers.value);
+  if (minHourlyCustomers > maxHourlyCustomers) {
+    alert('The minimum # of customers (' + minHourlyCustomers + ') cannot be higher than the maximum (' + maxHourlyCustomers + ').\n\n"' + location + '" was not added.');
+    document.getElementById('min_entry').value = '';
+    document.getElementById('max_entry').value = '';
+    return;
+  }
+  var avgCookiesPerSale = event.target.avg_cookies_per_sale.value;
   // create new store object with received arguments
-  var newStore = new Store(event.target.location.value, event.target.time_opening.value, event.target.time_closing.value, event.target.min_hourly_customers.value, event.target.max_hourly_customers.value, event.target.avg_cookies_per_sale.value);
+  var newStore = new Store(location,timeOpening,timeClosing,minHourlyCustomers,maxHourlyCustomers,avgCookiesPerSale);
   console.log(newStore + 'test');
   storesList.push(newStore);
+  // remove footer node from DOM
   footerElementNode.remove();
   // render new store to table
   storesList[(storesList.length - 1)].render();
+  // re-run footer report with new store included and create it again
   salesReportFooter();
-});
+  formEl.reset();
+}

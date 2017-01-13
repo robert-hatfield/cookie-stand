@@ -8,46 +8,38 @@
   <body>
 
     <section id="sales_report">
-      <h1><span id="sales_header">Daily Sales by hour &amp; location</span></h1>
+      <h1><span id="sales_header">Daily Sales by Hour &amp; Location</span></h1>
     </section>
 
     <form id="add_store">
       <fieldset>
         <legend>Add a New Store</legend>
         <fieldset>
-          <legend>Location &amp; Hours</legend>
+          <legend>Location &amp; Hours <i>(Store hours cannot be modified at this time.)</i></legend>
           <label for="location">Store Location:</label>
-          <input type="text" name="location" />
+          <input type="text" name="location" required>
           <label for="time_opening">Store Opening Time:</label>
-          <select name="time_opening">
-            <option value="6">6:00</option>
-            <option value="7">7:00</option>
-            <option value="8">8:00</option>
-            <option value="9">9:00</option>
-          </select>
+          <input type="number" name="time_opening" min="6" max="12" value="6" required readonly="">
           <label for="ampm_open">AM/PM</label>
-          <input type="radio" name="ampm_open" value="AM" checked="checked"/>AM
-          <input type="radio" name="ampm_open" value="PM" />PM
+          <input type="radio" name="ampm_open" value="AM" checked="checked" />AM
+          <input type="radio" name="ampm_open" value="PM" hidden="true" />PM
           <label for="time_closing">Store Closing Time:</label>
-          <select name="time_closing">
-            <option value="8">8:00</option>
-            <option value="9">9:00</option>
-            <option value="10">10:00</option>
-          </select>
+          <input type="number" name="time_closing" min="1" max="12" value="8" readonly="" required>
           <label for="ampm_close">AM/PM</label>
-          <input type="radio" name="ampm_close" value="AM" />AM
+          <input type="radio" name="ampm_close" value="AM" hidden="true" />AM
           <input type="radio" name="ampm_close" value="PM" checked="checked" />PM
         </fieldset>
         <fieldset>
           <legend>Statistics</legend>
           <label for="min_hourly_customers">Minimum Hourly Customers:</label>
-          <input type="text" name="min_hourly_customers" />
+          <input type="number" name="min_hourly_customers" size="4" min="0" required id="min_entry">
           <label for="max_hourly_customers">Maximum Hourly Customers:</label>
-          <input type="text" name="max_hourly_customers" />
+          <input type="number" name="max_hourly_customers" size="4" min="0" required id="max_entry">
           <label for="avg_cookies_per_sale">Average Cookies Per Customer:</label>
-          <input type="text" name="avg_cookies_per_sale" />
+          <input type="number" name="avg_cookies_per_sale" size="4" min="1" step="0.1" required>
         </fieldset>
         <button type="submit" name="create_store">CREATE NEW STORE</button>
+        <input type="reset">
       </fieldset>
     </form>
     <script src="app.js"></script>
