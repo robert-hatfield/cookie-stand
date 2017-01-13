@@ -16,6 +16,39 @@ for (var i = 0; i < 14; i++) {
   totalSalesToday[i] = 0;
 };
 
+// Construct initial 5 stores, and add them to storesList
+// location, timeOpening, timeClosing, minHourlyCustomers, maxHourlyCustomers, avgCookiesPerSale
+var store1 = new Store('1st & Pike', 6, 20, 23, 65, 6.3);
+var store2 = new Store('SeaTac Airport', 6, 20, 3, 24, 1.2);
+var store3 = new Store('Seattle Center', 6, 20, 11, 38, 3.7);
+var store4 = new Store('Capitol Hill', 6, 20, 20, 38, 2.3);
+var store5 = new Store('Alki', 6, 20, 2, 16, 4.6);
+for (var i = 1; i < 6; i++) {
+  eval('addStore (store' + i + ');');
+}
+
+// CREATE DAILY SALES REPORT TABLE
+// identify parent node on the DOM (HTML section "sales_report")
+var dailyReport = document.getElementById('sales_report');
+console.log(dailyReport);
+// Create a new table element & append it to the HTML section
+salesTableNode = document.createElement('table');
+// Give store render methods something to attach to
+salesTableNode.setAttribute('id', 'sales_report_table');
+dailyReport.appendChild(salesTableNode);
+
+// CONSTRUCTOR AND ASSOCIATED METHODS
+function Store(location,timeOpening,timeClosing,minHourlyCustomers,maxHourlyCustomers,avgCookiesPerSale) {
+  this.location = location;
+  this.timeOpening = timeOpening;
+  this.timeClosing = timeClosing;
+  this.minHourlyCustomers = parseInt(minHourlyCustomers);
+  this.maxHourlyCustomers = parseInt(maxHourlyCustomers);
+  this.avgCookiesPerSale = parseFloat(avgCookiesPerSale);
+  this.cookiesSoldHourly = [];
+  this.cookiesSoldToday = 0;
+}
+
 // Define checkSales method and add it to the Store objects' prototype
 Store.prototype.checkSales = function () {
   // Check each hour for how many cookies were sold
@@ -76,27 +109,6 @@ Store.prototype.render = function() {
   elTableRow.appendChild(elTableData);
 };
 
-// Construct initial 5 stores, and add them to storesList
-// location, timeOpening, timeClosing, minHourlyCustomers, maxHourlyCustomers, avgCookiesPerSale
-var store1 = new Store('1st & Pike', 6, 20, 23, 65, 6.3);
-var store2 = new Store('SeaTac Airport', 6, 20, 3, 24, 1.2);
-var store3 = new Store('Seattle Center', 6, 20, 11, 38, 3.7);
-var store4 = new Store('Capitol Hill', 6, 20, 20, 38, 2.3);
-var store5 = new Store('Alki', 6, 20, 2, 16, 4.6);
-for (var i = 1; i < 6; i++) {
-  eval('addStore (store' + i + ');');
-}
-
-// CREATE DAILY SALES REPORT
-// identify parent node on the DOM (HTML section "sales_report")
-var dailyReport = document.getElementById('sales_report');
-console.log(dailyReport);
-// Create a new table element & append it to the HTML section
-salesTableNode = document.createElement('table');
-// Give store render methods something to attach to
-salesTableNode.setAttribute('id', 'sales_report_table');
-dailyReport.appendChild(salesTableNode);
-
 // Call render function for the table header row
 salesReportHeader();
 
@@ -108,19 +120,7 @@ for (var i = 0; i < storesList.length; i++) {
 // Call render function for the table footer row
 salesReportFooter();
 
-// CONSTRUCTOR AND FUNCTIONS DEFINED
-
-// Constructor to create stores
-function Store(location,timeOpening,timeClosing,minHourlyCustomers,maxHourlyCustomers,avgCookiesPerSale) {
-  this.location = location;
-  this.timeOpening = timeOpening;
-  this.timeClosing = timeClosing;
-  this.minHourlyCustomers = parseInt(minHourlyCustomers);
-  this.maxHourlyCustomers = parseInt(maxHourlyCustomers);
-  this.avgCookiesPerSale = parseFloat(avgCookiesPerSale);
-  this.cookiesSoldHourly = [];
-  this.cookiesSoldToday = 0;
-}
+// FUNCTIONS
 
 // Function to add stores to the store list
 function addStore(store) {
@@ -130,7 +130,7 @@ function addStore(store) {
 }
 
 function salesReportHeader() {
-  // create the header row and append it to the table just created, along with first blank table header cell
+  // Create the header row and append it to the table just created, along with first blank table header cell
   var elTableRow = document.createElement('tr');
   salesTableNode.appendChild(elTableRow);
   var elFirstTableHeader = document.createElement('th');
