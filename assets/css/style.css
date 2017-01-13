@@ -1,12 +1,12 @@
 
 h3 {
   text-align: center;
-  margin: 10px 0px 10px 0px;
+  /*margin: 10px 0px 10px 0px;*/
 }
 
 .index {
   background-color: #ffa07a;
-  padding: 4px;
+  /*padding: 4px;*/
 }
 
 .highlight {
@@ -20,11 +20,11 @@ h3 {
 
 #pats {
   font-size: 2em;
-  margin-bottom: 0.2em;
+  /*margin-bottom: 0.2em;*/
 }
 
 #tagline {
-  margin-top: 0;
+  /*margin-top: 0;*/
 }
 
 .index_header {
@@ -32,40 +32,40 @@ h3 {
   color: #0b1d2e;
   font-size: 1.5em;
   text-align: center;
-  padding: 20px;
+  /*padding: 20px;*/
   border-radius: 30px;
 }
 
 img.center {
   max-width: 100%;
-  width: 90%;
+  width: 460px;
   height: auto;
   display: block;
-  padding-bottom: 5%;
+  /*padding-bottom: 5%;*/
   margin-left: auto;
   margin-right: auto;
 }
 
-footer {
+.sidebar {
   background-color: #aaaaaa;
   color: #0b1d2e;
   border-radius: 15px;
-  padding: 1px;
+  /*padding: 1px;*/
 }
 
 .about_salmon_cookies {
     background-color: #aaaaaa;
     border-radius: 15px;
-    padding: 1px 10px 1px 10px;
-    margin: 10px 0px 10px 0px;
+    /*padding: 1px 10px 1px 10px;
+    margin: 10px 0px 10px 0px;*/
 }
 
 .about_salmon_cookies p {
   font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
   color: #0b1d2e;
   line-height: 1.4em;
-  padding: 10px;
-  margin-top: 10px;
+  /*padding: 10px;
+  margin-top: 10px;*/
   border-radius: 10px;
   background-color: #bbbbbb;
 }
@@ -73,18 +73,21 @@ footer {
 #sales_report {
   text-align: center;
   background-color: #bbbbbb;
-  margin-bottom: 10px;
+  /*margin-bottom: 10px;*/
 }
 
 #locations {
-  margin-bottom: 10px;
-  padding-left: 5px;
+  /*margin-bottom: 10px;
+  padding-left: 5px;*/
   color: #005387;
   font-weight: bold;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-content: space-between;
+  display: block;
+  /*justify-content: space-around;
+  align-content: space-between;*/
+}
+
+ {
+  display: inline;
 }
 
 table, th, td {
