@@ -15,18 +15,18 @@
       <fieldset>
         <legend>Add a New Store</legend>
         <fieldset>
-          <legend>Location &amp; Hours</legend>
+          <legend>Location &amp; Hours <i>(Store hours cannot be modified at this time.)</i></legend>
           <label for="location">Store Location:</label>
           <input type="text" name="location" required>
           <label for="time_opening">Store Opening Time:</label>
-          <input type="number" name="time_opening" min="6" max="12" value="6" required>
+          <input type="number" name="time_opening" min="6" max="12" value="6" required readonly="">
           <label for="ampm_open">AM/PM</label>
           <input type="radio" name="ampm_open" value="AM" checked="checked" />AM
-          <input type="radio" name="ampm_open" value="PM" />PM
+          <input type="radio" name="ampm_open" value="PM" hidden="true" />PM
           <label for="time_closing">Store Closing Time:</label>
-          <input type="number" name="time_closing" min="1" max="12" value="8" required>
+          <input type="number" name="time_closing" min="1" max="12" value="8" readonly="" required>
           <label for="ampm_close">AM/PM</label>
-          <input type="radio" name="ampm_close" value="AM" />AM
+          <input type="radio" name="ampm_close" value="AM" hidden="true" />AM
           <input type="radio" name="ampm_close" value="PM" checked="checked" />PM
         </fieldset>
         <fieldset>
