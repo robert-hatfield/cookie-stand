@@ -234,6 +234,10 @@ formEl.addEventListener('submit', function(event) {
   }
   var minHourlyCustomers = parseInt(event.target.min_hourly_customers.value);
   var maxHourlyCustomers = parseInt(event.target.max_hourly_customers.value);
+  if (minHourlyCustomers > maxHourlyCustomers) {
+    alert('The minimum # of customers (' + minHourlyCustomers + ') cannot be higher than the maximum (' + maxHourlyCustomers + ').\n\n"' + location + '" was not added.');
+    return;
+  }
   var avgCookiesPerSale = event.target.avg_cookies_per_sale.value;
   // create new store object with received arguments
   var newStore = new Store(location,timeOpening,timeClosing,minHourlyCustomers,maxHourlyCustomers,avgCookiesPerSale);
