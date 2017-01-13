@@ -187,6 +187,22 @@ function salesReportFooter() {
   footerElementNode.appendChild(elTableData);
 }
 
+// Call this function to append new elements on the DOM
+// Pass undefined for optional arguments (classValue, idValue, textContent) if you do not want to set these attributes
+function appendToDom(newElementType, classValue, idValue, textContent, parentElement) {
+  var newElement = document.createElement(newElementType);
+  if (typeof classValue !== 'undefined') {
+    newElement.setAttribute('class', classValue);
+  }
+  if (typeof idValue !== 'undefined') {
+    newElement.setAttribute('id', idValue);
+  }
+  if (typeof textContent !== 'undefined') {
+    newElement.textContent = textContent;
+  }
+  parentElement.appendChild(newElement);
+}
+
 // create listener for forms submission
 var formEl = document.getElementById('add_store');
 
