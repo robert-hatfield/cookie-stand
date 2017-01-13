@@ -206,13 +206,17 @@ function appendToDom(newElementType, classValue, idValue, textContent, parentEle
 // create listener for forms submission
 var formEl = document.getElementById('add_store');
 
-formEl.addEventListener('submit', function(event) {
+formEl.addEventListener('submit', newStoreSubmit, false);
+
+function newStoreSubmit(event) {
   event.preventDefault();
   event.stopPropagation();
-  // convert or validate user input
+  // convert and/or validate user input
   var location = event.target.location.value;
   var timeOpening = parseInt(event.target.time_opening.value);
   var amPmOpen = event.target.ampm_open.value;
+
+  // change times from am/pm to 24hr
   console.log(timeOpening + ' is a ' + typeof timeOpening);
   console.log('Value: ' + amPmOpen + ' has data type of: ' + typeof amPmOpen + '.');
   console.log('Is this PM? ' + (amPmOpen === 'PM'));
@@ -232,10 +236,16 @@ formEl.addEventListener('submit', function(event) {
     timeClosing += 12;
     console.log(responseString + ' changing to ' + timeOpening + ' for calculations.');
   }
-  var minHourlyCustomers = parseInt(event.target.min_hourly_customers.value);
+
+  // If min customers exceeds max, abort store construction
+  var targetMinHourlyCustomers = event.target.min_hourly_customers.value;
+  var minHourlyCustomers = parseInt(targetMinHourlyCustomers);
+
   var maxHourlyCustomers = parseInt(event.target.max_hourly_customers.value);
   if (minHourlyCustomers > maxHourlyCustomers) {
     alert('The minimum # of customers (' + minHourlyCustomers + ') cannot be higher than the maximum (' + maxHourlyCustomers + ').\n\n"' + location + '" was not added.');
+    document.getElementById('min_entry').value = '';
+    document.getElementById('max_entry').value = '';
     return;
   }
   var avgCookiesPerSale = event.target.avg_cookies_per_sale.value;
@@ -249,4 +259,5 @@ formEl.addEventListener('submit', function(event) {
   storesList[(storesList.length - 1)].render();
   // re-run footer report with new store included and create it again
   salesReportFooter();
-});
+  formEl.reset();
+}
