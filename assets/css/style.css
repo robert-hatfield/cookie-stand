@@ -51,6 +51,7 @@ img.center {
   background-color: #aaaaaa;
   color: #0b1d2e;
   border-radius: 15px;
+  margin-bottom: 20px;
 }
 
 .about_salmon_cookies {
@@ -67,6 +68,12 @@ img.center {
   padding: 10px;
   border-radius: 10px;
   background-color: #bbbbbb;
+}
+
+.location_data {
+  color: #0b1d2e;
+  font-weight: normal;
+  list-style: none;
 }
 
 #index_footer {
@@ -92,7 +99,7 @@ footer>section {
   margin-bottom: 20px;
 }
 
-#locations {
+h3~ul {
   color: #005387;
   font-weight: bold;
   display: block;
