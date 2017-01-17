@@ -4,7 +4,7 @@ h3 {
   /*margin: 10px 0px 10px 0px;*/
 }
 
-.index {
+body {
   background-color: #ffa07a;
   /*padding: 4px;*/
 }
@@ -51,15 +51,12 @@ img.center {
   background-color: #aaaaaa;
   color: #0b1d2e;
   border-radius: 15px;
-  /*padding: 1px;*/
 }
 
 .about_salmon_cookies {
     background-color: #aaaaaa;
     border-radius: 15px;
     margin-bottom: 20px;
-    /*padding: 1px 10px 1px 10px;
-    margin: 10px 0px 10px 0px;*/
 }
 
 .about_salmon_cookies p {
@@ -89,18 +86,16 @@ footer>section {
 
 #sales_report {
   text-align: center;
-  background-color: #bbbbbb;
-  /*margin-bottom: 10px;*/
+  background-color: #aaaaaa;
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 20px;
 }
 
 #locations {
-  /*margin-bottom: 10px;
-  padding-left: 5px;*/
   color: #005387;
   font-weight: bold;
   display: block;
-  /*justify-content: space-around;
-  align-content: space-between;*/
 }
 
  {
@@ -110,4 +105,18 @@ footer>section {
 table, th, td {
   background-color: #bbbbbb;
   border: 1px solid #005387;
+}
+
+form {
+  background-color: #aaaaaa;
+  color: #0b1d2e;
+  font-weight: bold;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+label {
+  display: block;
+  width: 240px;
+  float: left;
 }
