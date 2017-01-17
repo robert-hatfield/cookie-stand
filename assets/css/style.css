@@ -32,8 +32,9 @@ h3 {
   color: #0b1d2e;
   font-size: 1.5em;
   text-align: center;
-  /*padding: 20px;*/
   border-radius: 30px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 img.center {
@@ -56,6 +57,7 @@ img.center {
 .about_salmon_cookies {
     background-color: #aaaaaa;
     border-radius: 15px;
+    margin-bottom: 20px;
     /*padding: 1px 10px 1px 10px;
     margin: 10px 0px 10px 0px;*/
 }
@@ -64,10 +66,25 @@ img.center {
   font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
   color: #0b1d2e;
   line-height: 1.4em;
-  /*padding: 10px;
-  margin-top: 10px;*/
+  margin: 10px;
+  padding: 10px;
   border-radius: 10px;
   background-color: #bbbbbb;
+}
+
+#index_footer {
+  clear: left;
+  width: 940px;
+  height: 39px;
+  margin-top: 20px;
+  margin-left: 10px;
+  background-color: #aaaaaa;
+  border-radius: 15px;
+}
+
+footer>section {
+  text-align: center;
+  margin-top: 10px;
 }
 
 #sales_report {
