@@ -2,30 +2,42 @@
 <html>
   <head>
     <title>Pat's Salmon Cookies | Sales</title>
-    <link href="https://fonts.googleapis.com/css?family=Cinzel+Decorative" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link href="https://fonts.googleapis.com/css?family=Cinzel+Decorative|Lato" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/960.css">
+    <link rel="stylesheet" href="assets/css/style.css">
   </head>
   <body>
-
-    <section id="sales_report">
-      <h1><span id="sales_header">Daily Sales by Hour &amp; Location</span></h1>
+    <div class="container_12">
+      <header class="index_header grid_12">
+        <h1 id="pats" class="highlight">Pat's Salmon Cookies</h1>
+        <h3 id="tagline"><em>A Northwest Original!</em></h3>
+        <img id="logo" class="center" src="./assets/imgs/salmon.png" alt="Logo for Pat's Salmon Cookies"/>
+      </header>
+    </div>
+    <section id="sales_report" class="container_12">
+      <h1><span id="sales_header" class="grid_12">Daily Sales by Hour &amp; Location</span></h1>
     </section>
-
-    <form id="add_store">
+    <section class="container_12">
+    <form id="add_store" class="grid_6 alpha">
       <fieldset>
         <legend>Add a New Store</legend>
         <fieldset>
-          <legend>Location &amp; Hours <i>(Store hours cannot be modified at this time.)</i></legend>
+          <legend>Location &amp; Hours</legend>
           <label for="location">Store Location:</label>
           <input type="text" name="location" required>
+          <br />
+          <br />
+          <i>(Store hours cannot be modified at this time.)</i>
+          <br />
           <label for="time_opening">Store Opening Time:</label>
           <input type="number" name="time_opening" min="6" max="12" value="6" required readonly="">
-          <label for="ampm_open">AM/PM</label>
+          <!-- <label for="ampm_open">AM/PM</label> -->
           <input type="radio" name="ampm_open" value="AM" checked="checked" />AM
           <input type="radio" name="ampm_open" value="PM" hidden="true" />PM
+          <br />
           <label for="time_closing">Store Closing Time:</label>
           <input type="number" name="time_closing" min="1" max="12" value="8" readonly="" required>
-          <label for="ampm_close">AM/PM</label>
+          <!-- <label for="ampm_close">AM/PM</label> -->
           <input type="radio" name="ampm_close" value="AM" hidden="true" />AM
           <input type="radio" name="ampm_close" value="PM" checked="checked" />PM
         </fieldset>
@@ -33,15 +45,18 @@
           <legend>Statistics</legend>
           <label for="min_hourly_customers">Minimum Hourly Customers:</label>
           <input type="number" name="min_hourly_customers" size="4" min="0" required id="min_entry">
+          <br />
           <label for="max_hourly_customers">Maximum Hourly Customers:</label>
           <input type="number" name="max_hourly_customers" size="4" min="0" required id="max_entry">
-          <label for="avg_cookies_per_sale">Average Cookies Per Customer:</label>
+          <br />
+          <label for="avg_cookies_per_sale">Average Cookies Per Sale:</label>
           <input type="number" name="avg_cookies_per_sale" size="4" min="1" step="0.1" required>
         </fieldset>
         <button type="submit" name="create_store">CREATE NEW STORE</button>
         <input type="reset">
       </fieldset>
     </form>
-    <script src="app.js"></script>
+  </section>
+    <script src="assets/js/app.js"></script>
   </body>
 </html>

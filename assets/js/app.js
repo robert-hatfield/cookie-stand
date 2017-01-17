@@ -230,11 +230,10 @@ function newStoreSubmit(event) {
   var amPmClose = event.target.ampm_close.value;
   console.log(timeClosing);
   console.log('Value: ' + amPmClose + ' has data type of: ' + typeof amPmClose + '.');
-  console.log('Value: ' + amPmOpen + ' has data type of: ' + typeof amPmOpen + '.');
   if (amPmClose === 'PM' && timeClosing != 12) {
     var responseString = timeClosing + amPmClose + ' was entered,';
     timeClosing += 12;
-    console.log(responseString + ' changing to ' + timeOpening + ' for calculations.');
+    console.log(responseString + ' changing to ' + timeClosing + ' for calculations.');
   }
 
   // If min customers exceeds max, abort store construction

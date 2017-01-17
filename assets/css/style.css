@@ -1,12 +1,12 @@
 
 h3 {
   text-align: center;
-  margin: 10px 0px 10px 0px;
+  /*margin: 10px 0px 10px 0px;*/
 }
 
-.index {
+body {
   background-color: #ffa07a;
-  padding: 4px;
+  /*padding: 4px;*/
 }
 
 .highlight {
@@ -20,11 +20,11 @@ h3 {
 
 #pats {
   font-size: 2em;
-  margin-bottom: 0.2em;
+  /*margin-bottom: 0.2em;*/
 }
 
 #tagline {
-  margin-top: 0;
+  /*margin-top: 0;*/
 }
 
 .index_header {
@@ -32,62 +32,98 @@ h3 {
   color: #0b1d2e;
   font-size: 1.5em;
   text-align: center;
-  padding: 20px;
   border-radius: 30px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 img.center {
   max-width: 100%;
-  width: 90%;
+  width: 460px;
   height: auto;
   display: block;
-  padding-bottom: 5%;
+  /*padding-bottom: 5%;*/
   margin-left: auto;
   margin-right: auto;
 }
 
-footer {
+.sidebar {
   background-color: #aaaaaa;
   color: #0b1d2e;
   border-radius: 15px;
-  padding: 1px;
+  margin-bottom: 20px;
 }
 
 .about_salmon_cookies {
     background-color: #aaaaaa;
     border-radius: 15px;
-    padding: 1px 10px 1px 10px;
-    margin: 10px 0px 10px 0px;
+    margin-bottom: 20px;
 }
 
 .about_salmon_cookies p {
   font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
   color: #0b1d2e;
   line-height: 1.4em;
+  margin: 10px;
   padding: 10px;
-  margin-top: 10px;
   border-radius: 10px;
   background-color: #bbbbbb;
 }
 
-#sales_report {
-  text-align: center;
-  background-color: #bbbbbb;
-  margin-bottom: 10px;
+.location_data {
+  color: #0b1d2e;
+  font-weight: normal;
+  list-style: none;
 }
 
-#locations {
-  margin-bottom: 10px;
-  padding-left: 5px;
+#index_footer {
+  clear: left;
+  width: 940px;
+  height: 39px;
+  margin-top: 20px;
+  margin-left: 10px;
+  background-color: #aaaaaa;
+  border-radius: 15px;
+}
+
+footer>section {
+  text-align: center;
+  margin-top: 10px;
+}
+
+#sales_report {
+  text-align: center;
+  background-color: #aaaaaa;
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+h3~ul {
   color: #005387;
   font-weight: bold;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-content: space-between;
+  display: block;
+}
+
+ {
+  display: inline;
 }
 
 table, th, td {
   background-color: #bbbbbb;
   border: 1px solid #005387;
+}
+
+form {
+  background-color: #aaaaaa;
+  color: #0b1d2e;
+  font-weight: bold;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+label {
+  display: block;
+  width: 240px;
+  float: left;
 }
